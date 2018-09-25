@@ -76,6 +76,7 @@ io.sockets.on('connection', function (socket) {
     if (ns.match(new RegExp(routes['game']))) {
         let nsp = io.of(ns);
         const gameId = ns.replace('\/game\/', '');
+
         if (typeof messages[gameId] === 'undefined') {
             messages[gameId] = [];
         }
@@ -159,22 +160,28 @@ io.sockets.on('connection', function (socket) {
                 nsp.to(socket.id).emit('get_messages', messages[gameId]);
             });
 
-            socket.on('new_message', (message) => {
+            socket.on('new_message', (message, id) => {
+                if (null !== id) {
+                    const gameIndex = games.findIndex((game) => game.id === id);
+                    const game = games[gameIndex];
 
-                // get last message
-                const last = messages[gameId][messages[gameId].length - 1];
+                    if (typeof game !== "undefined" && null !== game) {
+                        // get last message
+                        const last = messages[gameId][messages[gameId].length - 1];
 
-                // check if new and last messages are distinct
-                if (undefined === last || !(undefined !== last && last.content === message.content && last.date === message.date && last.sender === message.sender)) {
-                    socket.join('chat');
-                    console.log('new_message');
-                    messages[gameId].push(message);
+                        // check if new and last messages are distinct
+                        if (undefined === last || (undefined !== last && !(last.content === message.content && last.date === message.date && last.sender === message.sender))) {
+                            socket.join('chat');
+                            messages[gameId].push(message);
 
-                    // get the opponent if exist
-                    const opponent = game.players.find((player) => player.name !== name);
-                    if (typeof opponent !== "undefined") {
-                        // send new message to the opponent
-                        nsp.to(opponent.socket).emit('new_message', message);
+                            // get the opponent if exist
+                            const opponent = game.players.find((player) => player.socket !== socket.id);
+                            console.log(opponent);
+                            if (typeof opponent !== "undefined") {
+                                // send new message to the opponent
+                                nsp.to(opponent.socket).emit('new_message', message);
+                            }
+                        }
                     }
                 }
             });
@@ -184,16 +191,14 @@ io.sockets.on('connection', function (socket) {
                     const game = games[gameIndex];
                     if (-1 !== gameIndex && typeof game !== "undefined" && null !== game) {
                         socket.join('game');
-                        console.log('new_move');
 
                         // check if playable and store
 
                         // get the opponent
                         const opponent = game.players.find((player) => player.socket !== socket.id);
-                        console.log(opponent);
                         if (typeof opponent !== "undefined") {
                             // send new move to the opponent
-                            console.log('server:new_move, x:' + x + ', y:' + y);
+                            console.log('new_move');
                             nsp.to(opponent.socket).emit('new_move', id, x, y);
                         }
 

@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {Message} from "../models/message";
 import * as moment from "moment";
 import {NamespaceService} from "./namespace.service";
+import {Game} from "../models/game";
 
 @Injectable({
     providedIn: 'root'
@@ -14,10 +15,11 @@ export class ChatService {
 
     /**
      * @param message
+     * @param game
      */
-    public sendMessage(message: Message) {
+    public sendMessage(message: Message, game: Game = null) {
         message.date = moment().toDate();
-        this.nsService.socket.emit('new_message', message);
+        this.nsService.socket.emit('new_message', message, (null !== game ? game.id : null));
     }
 
     public onNewMessage() {

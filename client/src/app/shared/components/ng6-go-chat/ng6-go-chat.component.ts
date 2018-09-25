@@ -1,8 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ChatService} from "../../services/chat.service";
 import {distinctUntilChanged, filter, flatMap, take} from "rxjs/operators";
 import {Message} from "../../models/message";
 import {UserService} from "../../services/user.service";
+import {GoService} from "../../services/go.service";
+import {Game} from "../../models/game";
 
 @Component({
     selector: 'ng6-go-chat',
@@ -10,13 +12,28 @@ import {UserService} from "../../services/user.service";
 })
 export class Ng6GoChatComponent implements OnInit {
 
-    sender: string | null;
-    message: Message;
-    messages: Message[];
-    @ViewChild('ng6GoCardMessages') private ng6GoCardMessages: ElementRef;
+    public sender: string | null;
+    public messages: Message[];
+    public message: Message;
+    private game: Game;
 
-    constructor(private chatService: ChatService, private userService: UserService) {
+    constructor(
+        private chatService: ChatService,
+        private userService: UserService,
+        private goService: GoService
+    ) {
         this.message = new Message("");
+    }
+
+    public displayDate(previous: Message = null, current: Message): boolean {
+        if (undefined !== previous && null !== previous) {
+            const diffWithPrevious = (new Date(current.date)).getTime() - (new Date(previous.date)).getTime();
+
+            // or if the last message is less than 60 seconds old do not display date
+            return Math.round(diffWithPrevious / 1000) > 60;
+        } else {
+            return true;
+        }
     }
 
     public sendMessage(): void {
@@ -26,10 +43,10 @@ export class Ng6GoChatComponent implements OnInit {
             this.message.sender = this.sender;
 
             // send message to server
-            this.chatService.sendMessage(this.message);
+            this.chatService.sendMessage(this.message, this.game);
 
             // add message to view
-            this.addMessage(this.message);
+            this.messages.push(this.message);
 
             // reset message
             this.message = new Message("");
@@ -43,7 +60,7 @@ export class Ng6GoChatComponent implements OnInit {
                 distinctUntilChanged()
             )
             .subscribe((username) => this.sender = username);
-
+        this.goService.game.subscribe((game) => this.game = game);
         this.chatService.getMessages()
             .pipe(
                 take(1),
@@ -52,8 +69,9 @@ export class Ng6GoChatComponent implements OnInit {
                 distinctUntilChanged((a: Message, b: Message) => a.content === b.content && a.date === b.date && a.sender === b.sender)
             )
             .subscribe((message: Message) => {
-                this.addMessage(message);
-            });
+                this.messages.push(message);
+            })
+        ;
 
         this.chatService
             .onNewMessage()
@@ -62,33 +80,9 @@ export class Ng6GoChatComponent implements OnInit {
                 distinctUntilChanged((a: Message, b: Message) => a.content === b.content && a.date === b.date && a.sender === b.sender)
             )
             .subscribe((message: Message) => {
-                this.addMessage(message)
-            });
-    }
-
-    private scrollToBottom(): void {
-        try {
-            this.ng6GoCardMessages.nativeElement.scrollTop = this.ng6GoCardMessages.nativeElement.scrollHeight;
-        } catch (err) {
-        }
-    }
-
-    /**
-     * @param message
-     */
-    private addMessage(message: Message): void {
-
-        const last = this.messages[this.messages.length - 1];
-        // if the last message is less than 60 seconds old do not display date
-        if (undefined !== last && last.sender === message.sender) {
-            const diff = (new Date(last.date)).getTime() - (new Date(message.date)).getTime();
-            message.details = Math.round(diff / 1000) > 60;
-        } else {
-            message.details = true;
-        }
-
-        this.messages.push(message);
-        this.scrollToBottom();
+                this.messages.push(message)
+            })
+        ;
     }
 
 }
