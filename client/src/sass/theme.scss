@@ -1,0 +1,94 @@
+@import '../../node_modules/@angular/material/theming';
+
+@include mat-core();
+
+$ng6-go-primary-color: (
+    50 : #e3effa,
+    100 : #bad6f2,
+    200 : #8cbbe9,
+    300 : #5e9fe0,
+    400 : #3c8bd9,
+    500 : #1976d2,
+    600 : #166ecd,
+    700 : #1263c7,
+    800 : #0e59c1,
+    900 : #0846b6,
+    A100 : #e0eaff,
+    A200 : #adc6ff,
+    A400 : #7aa3ff,
+    A700 : #6191ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$ng6-go-accent-color: (
+    50 : #e7f1e8,
+    100 : #c3ddc5,
+    200 : #9cc79e,
+    300 : #74b077,
+    400 : #569f59,
+    500 : #388e3c,
+    600 : #328636,
+    700 : #2b7b2e,
+    800 : #247127,
+    900 : #175f1a,
+    A100 : #9aff9d,
+    A200 : #67ff6b,
+    A400 : #34ff3a,
+    A700 : #1aff21,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$ng6-go-primary: mat-palette($ng6-go-primary-color);
+$ng6-go-accent: mat-palette($ng6-go-accent-color);
+$ng6-go-warn: mat-palette($mat-deep-orange);
+
+$ng6-go-theme: mat-light-theme($ng6-go-primary, $ng6-go-accent, $ng6-go-warn);
+
+@include angular-material-theme($ng6-go-theme);
+
+@import "shared/variables";
+
+$mdc-theme-primary: map_get($ng6-go-primary-color, 500);
+$mdc-theme-secondary: map_get($ng6-go-accent-color, 500);
+
+@import "~@angular-mdc/theme/material";
+
+@import "app";
+@import "shared/components/ng6-go-toolbar";
+@import "components/home";
+@import "components/game";
+@import "shared/components/ng6-go-chat";
+@import "shared/components/ng6-go-games";
+@import "shared/components/ng6-go-nav";
+@import "shared/components/ng6-go-dash";
+@import "shared/components/ng6-go-board";

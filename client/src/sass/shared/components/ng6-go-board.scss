@@ -1,0 +1,48 @@
+ng6-go-board {
+    @extend %display-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    @extend %noselect;
+    padding: 0 1rem;
+
+    .ng6-go-board-svg {
+        margin-bottom: 1rem;
+        max-height: calc(100% - 6rem);
+    }
+
+    .mdc-fab:disabled {
+        background-color: grey !important;
+        cursor: initial;
+    }
+
+    .empty-black:hover {
+        fill: url(#black);
+        fill-opacity: 0.3;
+    }
+
+    .empty-white:hover {
+        fill: url(#white);
+        fill-opacity: 0.3;
+    }
+
+    .text-coordinate {
+        font: 200px Verdana, Helvetica, Arial, sans-serif;
+    }
+
+    .text-sequence-black {
+        font: 200px Verdana, Helvetica, Arial, sans-serif;
+        fill: #ffffff
+    }
+
+    .text-sequence-white {
+        font: 200px Verdana, Helvetica, Arial, sans-serif;
+        fill: #000000
+    }
+
+    .text-sequence-last {
+        font: 200px Verdana, Helvetica, Arial, sans-serif;
+        fill: #ff0000
+    }
+}

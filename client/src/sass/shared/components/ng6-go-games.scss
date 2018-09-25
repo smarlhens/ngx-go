@@ -1,0 +1,66 @@
+ng6-go-games {
+    @extend %display-flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    max-height: 100%;
+    place-content: center stretch;
+    align-items: stretch;
+
+    .ng6-go-card-games {
+
+        @extend %display-flex;
+        flex-direction: column;
+        margin: 2rem;
+        width: 100%;
+
+        .mdc-button.big-round-corner-button {
+            float: right;
+            font-size: 0.75rem;
+            margin-left: 1rem;
+            @include mdc-button-corner-radius(30px);
+        }
+
+        .mat-card-content {
+            overflow: hidden;
+            max-height: 100%;
+
+            .mat-list {
+                max-height: 100%;
+                overflow-y: auto;
+
+                .mat-list-item-game .mat-list-item-content {
+                    @extend %display-flex;
+                    flex-direction: row;
+                    padding: 0;
+                    width: 100%;
+
+                    .mat-list-item-name, .mat-list-item-details, .mat-list-item-actions {
+                        flex: 1 1 100%;
+                        box-sizing: border-box;
+                    }
+
+                    .mat-list-item-actions, .mat-list-item-details {
+                        max-width: 25%;
+                    }
+
+                    .mat-list-item-name {
+                        max-width: 50%;
+                    }
+
+                    .mat-list-item-details {
+                        color: grey;
+                        font-size: 0.8rem;
+                    }
+
+                    .mat-list-item-actions .mdc-button {
+                        font-size: 0.625rem;
+                        @include mdc-states-base-color($mdc-theme-secondary);
+                        @include mdc-button-filled-accessible($mdc-theme-secondary);
+
+                    }
+                }
+            }
+        }
+    }
+}

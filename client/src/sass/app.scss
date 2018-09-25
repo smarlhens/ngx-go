@@ -1,0 +1,61 @@
+.mat-drawer-content {
+    overflow-y: inherit !important;
+}
+
+.app-content {
+    height: calc(100% - 64px);
+}
+
+@media (max-width: 599px) {
+    .app-content {
+        height: calc(100% - 56px);
+    }
+}
+
+mat-toolbar.mat-toolbar-app {
+    @extend %noselect;
+}
+
+/* Absolute Center Spinner */
+.loader-background {
+    position: fixed;
+    z-index: 1000;
+    height: 2rem;
+    width: 2rem;
+    overflow: show;
+    margin: auto;
+    top: calc(128px - 1rem);
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+/* Transparent Overlay */
+.loader-background:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: calc(128px - 1rem);
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 599px) {
+    .loader-background:before, .loader-background {
+        top: calc(112px - 1rem);
+    }
+}
+
+app-home {
+    @extend %display-flex;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    flex-direction: column;
+}
+
+.no-select {
+    @extend %noselect;
+}

@@ -1,0 +1,14 @@
+<mat-toolbar color="primary" class="mat-elevation-z2" fxLayout="row">
+    <span *ngIf="router.url==='/' && (!game || (game && game.active))"></span>
+    <span fxLayout="row" fxLayoutAlign="start center" fxFlex="25">
+        <button *ngIf="router.url!=='/' && (!game || (game && !game.active))" id="backButton" #backBtn mat-icon-button (click)="goBack()" title="Page précédente">
+          <mat-icon aria-label="Page précédente">arrow_back</mat-icon>
+        </button>
+    </span>
+    <span fxLayout="row" fxLayoutAlign="center center" fxFlex="50">
+        Jeu de Go
+    </span>
+    <span fxLayout="row" fxLayoutAlign="end center" fxFlex="25">
+        <mdc-text-field [formControl]="usernameControl" disabled class="ng6-go-username" fullwidth label="Nom d'utilisateur" dense=true maxlength="30" required></mdc-text-field>
+    </span>
+</mat-toolbar>

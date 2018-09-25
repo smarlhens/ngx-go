@@ -1,0 +1,24 @@
+<mat-card class="ng6-go-card-chat">
+    <mat-card-title>Chat</mat-card-title>
+    <mat-card-content #ng6GoCardMessages class="ng6-go-card-messages">
+        <div class="ng6-go-chip-message" *ngFor="let message of messages">
+            <div *ngIf="message.details" class="ng6-go-chip-message-date">
+                {{message.date|date:'dd MMMM yyyy, HH:mm'}}
+            </div>
+            <div *ngIf="message.details && message.sender !== sender" class="ng6-go-chip-message-sender">
+                {{message.sender}}
+            </div>
+            <div [ngClass]="message.sender === sender ? 'ng6-go-chip-message-me' : 'ng6-go-chip-message-other'">
+                <mdc-chip [primary]="message.sender === sender">
+                    <mdc-chip-text>{{message.content}}</mdc-chip-text>
+                </mdc-chip>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-footer>
+        <mdc-text-field [(ngModel)]="message.content" label="Message" dense=true fullwidth
+                        (keyup)="$event.keyCode == 13 && sendMessage()">
+            <mdc-icon trailing clickable (click)="sendMessage()">send</mdc-icon>
+        </mdc-text-field>
+    </mat-card-footer>
+</mat-card>

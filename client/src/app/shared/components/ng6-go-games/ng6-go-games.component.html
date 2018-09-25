@@ -1,0 +1,21 @@
+<mat-card class="ng6-go-card-games">
+    <mat-card-title>
+        Parties en attente
+        <span>
+            <!--<button (click)="customGame()" mdc-button [unelevated]="true" class="big-round-corner-button">Partie personnalisée</button>-->
+            <button (click)="newGame()" mdc-button [unelevated]="true" class="big-round-corner-button">Partie rapide</button>
+        </span>
+    </mat-card-title>
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item class="mat-list-item-game" *ngFor="let game of gamesList|async">
+                <span fxFlex="50" class="mat-list-item-name">partie {{game.id}}</span>
+                <span fxFlex="25" class="mat-list-item-details"></span>
+                <!--<span fxFlex="25" class="mat-list-item-details">dimension : {{game.dimension}}</span>-->
+                <span fxFlex="25" class="mat-list-item-actions">
+                    <button (click)="joinGame(game.id)" mdc-button [unelevated]="true" class="big-round-corner-button">Rejoindre</button>
+                </span>
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+</mat-card>

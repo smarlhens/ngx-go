@@ -1,0 +1,10 @@
+app-home{
+    @extend %display-flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    place-content: center stretch;
+    align-items: stretch;
+    overflow: hidden;
+}
