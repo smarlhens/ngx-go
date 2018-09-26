@@ -1,3 +1,5 @@
+<div class="ng6-go-board-panel-actions"></div>
+
 <svg xmlns="http://www.w3.org/2000/svg/"
      [attr.viewBox]="'0 0 '+(game.dimension*500+1250)+' '+(game.dimension*500+1250)" class="ng6-go-board-svg">
 
@@ -79,14 +81,16 @@
     </defs>
 </svg>
 
-<button *ngIf="game.players.length < 2" mdc-fab extended disabled>
-    <mdc-fab-label>En attente d'un adversaire</mdc-fab-label>
-</button>
+<div class="ng6-go-board-panel-actions">
+    <button *ngIf="game.players.length < 2" mdc-fab extended disabled>
+        <mdc-fab-label>En attente d'un adversaire</mdc-fab-label>
+    </button>
 
-<button *ngIf="game.players.length === 2 && !amIReady()" mdc-fab extended (click)="playerReady()">
-    <mdc-fab-label>Prêt</mdc-fab-label>
-</button>
+    <button *ngIf="game.players.length === 2 && !amIReady()" mdc-fab extended (click)="playerReady()">
+        <mdc-fab-label>Prêt</mdc-fab-label>
+    </button>
 
-<button *ngIf="game.players.length === 2 && amIReady() && !isOpponentReady()" mdc-fab extended disabled>
-    <mdc-fab-label>Votre adversaire n'est pas prêt</mdc-fab-label>
-</button>
+    <button *ngIf="game.players.length === 2 && amIReady() && !isOpponentReady()" mdc-fab extended disabled>
+        <mdc-fab-label>Votre adversaire n'est pas prêt</mdc-fab-label>
+    </button>
+</div>

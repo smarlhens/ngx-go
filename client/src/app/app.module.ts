@@ -16,6 +16,7 @@ import {Ng6GoGamesComponent} from './shared/components/ng6-go-games/ng6-go-games
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {Ng6GoBoardComponent} from './shared/components/ng6-go-board/ng6-go-board.component';
 import {Ng6GoToolbarComponent} from './shared/components/ng6-go-toolbar/ng6-go-toolbar.component';
+import {Ng6GoOverviewComponent} from './shared/components/ng6-go-overview/ng6-go-overview.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import {Ng6GoToolbarComponent} from './shared/components/ng6-go-toolbar/ng6-go-t
         Ng6GoChatComponent,
         Ng6GoGamesComponent,
         Ng6GoBoardComponent,
-        Ng6GoToolbarComponent
+        Ng6GoToolbarComponent,
+        Ng6GoOverviewComponent
     ],
     imports: [
         BrowserModule,

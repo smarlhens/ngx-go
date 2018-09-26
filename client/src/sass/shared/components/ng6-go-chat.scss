@@ -2,34 +2,90 @@ ng6-go-chat {
     @extend %display-flex;
     flex-direction: column;
     box-sizing: border-box;
-    display: flex;
     height: 100%;
     place-content: center stretch;
     align-items: stretch;
 
-    .ng6-go-card-chat {
-        overflow: hidden;
+    &.ng6-go-chat-ingame {
+        height: 60% !important;
+
+        .ng6-go-chat-panel .ng6-go-chat-panel-title{
+            margin-top: 1rem;
+        }
+    }
+
+    .ng6-go-chat-panel {
         @extend %display-flex;
+        overflow: hidden;
         flex-direction: column;
         height: 100%;
-        padding: 1rem;
         justify-content: space-between;
-        border-radius: 0 !important;
 
-        .ng6-go-card-messages {
+        .ng6-go-chat-panel-title {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .ng6-go-chat-panel-messages {
             @extend %display-flex;
             overflow-y: auto;
             flex-direction: column;
             height: 100%;
+
+            .ng6-go-chip-message {
+                @extend %noselect;
+                margin-bottom: 0.25rem;
+
+                .mdc-chip {
+                    height: auto !important;
+                    max-width: 100%;
+                    .mdc-chip__text {
+                        white-space: pre-wrap;
+                        overflow-wrap: break-word;
+                        max-width: 100%;
+                    }
+                }
+
+                .ng6-go-chip-message-date {
+                    @extend %display-flex;
+                    justify-content: center;
+                    color: grey;
+                    font-size: x-small;
+                    font-weight: 300;
+                    margin-bottom: 0.125rem;
+                }
+
+                .ng6-go-chip-message-sender {
+                    @extend %display-flex;
+                    justify-content: left;
+                    color: grey;
+                    font-size: x-small;
+                    font-weight: 300;
+                    margin-bottom: 0.125rem;
+                }
+
+                .ng6-go-chip-message-me, .ng6-go-chip-message-other {
+                    @extend %display-flex;
+                }
+
+                .ng6-go-chip-message-me {
+                    justify-content: right;
+                }
+
+                .ng6-go-chip-message-other {
+                    justify-content: left;
+                }
+            }
         }
 
-        .mat-card-footer {
+        .ng6-go-chat-panel-actions {
             @extend %display-flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            margin: 0;
             padding: 0;
+            margin: 1rem 0 0;
 
             .mdc-text-field {
                 width: 100%;
@@ -44,7 +100,6 @@ ng6-go-chat {
                 .ng-mdc-icon {
                     @include mdc-icon-button-ink-color($mdc-theme-primary);
                 }
-
             }
 
             .mdc-text-field--fullwidth:not(.mdc-text-field--textarea)::before,
@@ -62,51 +117,5 @@ ng6-go-chat {
             }
 
         }
-
-        .ng6-go-chip-message {
-            @extend %noselect;
-            margin-bottom: 0.25rem;
-
-            .mdc-chip {
-                height: auto !important;
-                max-width: 100%;
-                .mdc-chip__text {
-                    white-space: pre-wrap;
-                    overflow-wrap: break-word;
-                    max-width: 100%;
-                }
-            }
-
-            .ng6-go-chip-message-date {
-                @extend %display-flex;
-                justify-content: center;
-                color: grey;
-                font-size: smaller;
-                font-weight: 300;
-                margin-bottom: 0.125rem;
-            }
-
-            .ng6-go-chip-message-sender {
-                @extend %display-flex;
-                justify-content: left;
-                color: grey;
-                font-size: smaller;
-                font-weight: 300;
-                margin-bottom: 0.125rem;
-            }
-
-            .ng6-go-chip-message-me, .ng6-go-chip-message-other {
-                @extend %display-flex;
-            }
-
-            .ng6-go-chip-message-me {
-                justify-content: right;
-            }
-
-            .ng6-go-chip-message-other {
-                justify-content: left;
-            }
-        }
-
     }
 }

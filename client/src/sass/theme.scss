@@ -92,3 +92,6 @@ $mdc-theme-secondary: map_get($ng6-go-accent-color, 500);
 @import "shared/components/ng6-go-nav";
 @import "shared/components/ng6-go-dash";
 @import "shared/components/ng6-go-board";
+@import "shared/components/ng6-go-overview";
+
+@import "~sass-spacing/index.css";
