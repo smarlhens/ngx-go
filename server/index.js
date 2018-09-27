@@ -5,7 +5,7 @@ let server = http.Server(app);
 let url = require('url');
 let socketIO = require('socket.io');
 let io = socketIO(server);
-const port = process.env.PORT || 3000;
+const port = 1337;
 
 const Game = require('./dist/game.js').Game;
 

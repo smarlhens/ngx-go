@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
 import * as io from 'socket.io-client';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class NamespaceService {
     public socket;
-    private url = 'http://localhost:3000';
     private defaultNS: string = '/';
     private currentNS: string;
 
@@ -46,7 +46,7 @@ export class NamespaceService {
             if (typeof this.socket !== "undefined" && null !== this.socket && this.socket.connected) {
                 this.socket.disconnect();
             }
-            this.socket = io.connect(this.url + ns, {
+            this.socket = io.connect(environment.url + ns, {
                 query: 'ns=' + ns,
                 forceNew: true,
                 resource: "socket.io"
