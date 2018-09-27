@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 let express = require('express');
 let app = express();
 let http = require('http');
