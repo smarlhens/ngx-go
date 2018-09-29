@@ -1,4 +1,7 @@
 export const environment = {
     production: false,
-    url: 'http://127.0.0.1:1337'
+    locale: 'en',
+    client: 'http://localhost:4200',
+    server: 'http://127.0.0.1:1337'
+
 };

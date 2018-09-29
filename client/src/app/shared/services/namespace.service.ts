@@ -46,7 +46,7 @@ export class NamespaceService {
             if (typeof this.socket !== "undefined" && null !== this.socket && this.socket.connected) {
                 this.socket.disconnect();
             }
-            this.socket = io.connect(environment.url + ns, {
+            this.socket = io.connect(environment.server + ns, {
                 query: 'ns=' + ns,
                 forceNew: true,
                 resource: "socket.io"

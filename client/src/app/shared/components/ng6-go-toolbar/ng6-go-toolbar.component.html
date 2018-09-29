@@ -11,19 +11,19 @@
     </span>
     <span fxLayout="row" fxLayoutAlign="end center" fxFlex="25">
         <mdc-text-field [formControl]="usernameControl" class="ng6-go-username" fullwidth label="Nom d'utilisateur"
-                        dense=true maxlength="30" required></mdc-text-field>
-        <button mat-icon-button [matMenuTriggerFor]="menuLanguage">
+                        dense=true maxlength="30" required [ngStyle]="{'padding-right': (router.url === '/' ? '1rem' : '0')}"></mdc-text-field>
+        <button mat-icon-button [matMenuTriggerFor]="menuLanguage" *ngIf="router.url === '/'">
             <mat-icon>language</mat-icon>
         </button>
         <mat-menu #menuLanguage="matMenu">
-            <button mat-menu-item (click)="changeLocale('en')" [disabled]="disableLocale('en')">
+            <a type="button" href="https://ng6-go.marlhens.com" mat-menu-item [disabled]="disableLocale('en')">
                 <span class="flag-icon flag-icon-us"></span>
                 <span>EN</span>
-            </button>
-            <button mat-menu-item (click)="changeLocale('fr')" [disabled]="disableLocale('fr')">
+            </a>
+            <a type="button" href="https://ng6-go.marlhens.fr" mat-menu-item [disabled]="disableLocale('fr')">
                 <span class="flag-icon flag-icon-fr"></span>
                 <span>FR</span>
-            </button>
+            </a>
         </mat-menu>
     </span>
 </mat-toolbar>

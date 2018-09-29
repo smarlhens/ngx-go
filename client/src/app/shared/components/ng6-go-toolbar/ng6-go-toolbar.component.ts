@@ -6,6 +6,7 @@ import {Location} from '@angular/common';
 import {Router} from "@angular/router";
 import {GoService} from "../../services/go.service";
 import {Game} from "../../models/game";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'ng6-go-toolbar',
@@ -50,24 +51,8 @@ export class Ng6GoToolbarComponent implements OnInit {
         this.goService.leaveGame(this.game, this.usernameControl.value);
     }
 
-    public changeLocale(locale: string): void {
-        const current = localStorage.getItem('locale') || 'en';
-
-        if ('fr' === locale && locale !== current) {
-            localStorage.setItem('locale', 'fr');
-        }
-
-        if ('en' === locale && locale !== current) {
-            localStorage.setItem('locale', 'en');
-        }
-
-        if (locale !== current) {
-            location.reload(true);
-        }
-    }
-
     public disableLocale(locale: string): boolean {
-        return (localStorage.getItem('locale') || 'en') === locale;
+        return environment.locale === locale;
     }
 
 }

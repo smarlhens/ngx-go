@@ -46,7 +46,11 @@
                             "aot": true,
                             "extractLicenses": true,
                             "vendorChunk": true,
-                            "buildOptimizer": true
+                            "buildOptimizer": true,
+                            "outputPath": "dist/ng6-go-en",
+                            "i18nFile": "src/i18n/messages.en.xlf",
+                            "i18nFormat": "xlf",
+                            "i18nLocale": "en-US"
                         },
                         "fr": {
                             "fileReplacements": [
@@ -64,7 +68,10 @@
                             "extractLicenses": true,
                             "vendorChunk": true,
                             "buildOptimizer": true,
-                            "outputPath": "dist/ng6-go-fr"
+                            "outputPath": "dist/ng6-go-fr",
+                            "i18nFile": "src/i18n/messages.fr.xlf",
+                            "i18nFormat": "xlf",
+                            "i18nLocale": "fr-FR"
                         }
                     }
                 },

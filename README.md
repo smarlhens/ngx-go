@@ -10,8 +10,6 @@ TODO / IDEAS :
 * game : Add a spectator mode on game
 * game : On game end, destroy game component
 * games : List only the games not started/empty
-* i18n : Check configuration
-* i18n : If locale change only reload view not page
 * i18n : change date format by locale
 * i18n : change placeholders
 * overview : Display the number of turns, the name of the player who plays, the number of points 
