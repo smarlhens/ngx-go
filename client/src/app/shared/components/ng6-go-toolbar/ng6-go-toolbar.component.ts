@@ -16,7 +16,13 @@ export class Ng6GoToolbarComponent implements OnInit {
     public usernameControl: FormControl;
     public game: Game;
 
-    constructor(private userService: UserService, private zone: NgZone, private location: Location, public router: Router, private goService: GoService) {
+    constructor(
+        private userService: UserService,
+        private zone: NgZone,
+        private location: Location,
+        public router: Router,
+        private goService: GoService
+    ) {
         this.usernameControl = new FormControl('', [
             Validators.pattern(/\S+/),
             Validators.pattern(/^[a-zA-Z\u00C0-\u017F\ ]+$/)
@@ -26,8 +32,9 @@ export class Ng6GoToolbarComponent implements OnInit {
     ngOnInit(): void {
         this.goService.game.subscribe((game) => this.game = game);
         this.zone.run(() => {
-                const randomName = 'joueur_' + Math.random().toString(36).substr(2, 9);
+                const randomName = 'player_' + Math.random().toString(36).substr(2, 9);
                 this.usernameControl.setValue(randomName);
+                this.usernameControl.disable();
                 this.userService.updateUsername(randomName);
             }
         );
@@ -41,6 +48,26 @@ export class Ng6GoToolbarComponent implements OnInit {
     public goBack(): void {
         this.location.back();
         this.goService.leaveGame(this.game, this.usernameControl.value);
+    }
+
+    public changeLocale(locale: string): void {
+        const current = localStorage.getItem('locale') || 'en';
+
+        if ('fr' === locale && locale !== current) {
+            localStorage.setItem('locale', 'fr');
+        }
+
+        if ('en' === locale && locale !== current) {
+            localStorage.setItem('locale', 'en');
+        }
+
+        if (locale !== current) {
+            location.reload(true);
+        }
+    }
+
+    public disableLocale(locale: string): boolean {
+        return (localStorage.getItem('locale') || 'en') === locale;
     }
 
 }

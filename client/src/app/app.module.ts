@@ -17,6 +17,11 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {Ng6GoBoardComponent} from './shared/components/ng6-go-board/ng6-go-board.component';
 import {Ng6GoToolbarComponent} from './shared/components/ng6-go-toolbar/ng6-go-toolbar.component';
 import {Ng6GoOverviewComponent} from './shared/components/ng6-go-overview/ng6-go-overview.component';
+import {registerLocaleData} from "@angular/common";
+import localeFr from '@angular/common/locales/fr';
+import localeFrExtra from '@angular/common/locales/extra/fr';
+
+registerLocaleData(localeFr, 'fr', localeFrExtra);
 
 @NgModule({
     declarations: [

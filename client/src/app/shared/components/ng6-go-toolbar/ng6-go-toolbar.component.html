@@ -1,14 +1,29 @@
 <mat-toolbar color="primary" class="mat-elevation-z2" fxLayout="row">
     <span *ngIf="router.url==='/' && (!game || (game && game.active))"></span>
     <span fxLayout="row" fxLayoutAlign="start center" fxFlex="25">
-        <button *ngIf="router.url!=='/' && (!game || (game && !game.active))" id="backButton" #backBtn mat-icon-button (click)="goBack()" title="Page précédente">
+        <button *ngIf="router.url!=='/' && (!game || (game && !game.active))" id="backButton" #backBtn mat-icon-button
+                (click)="goBack()" title="Page précédente">
           <mat-icon aria-label="Page précédente">arrow_back</mat-icon>
         </button>
     </span>
-    <span fxLayout="row" fxLayoutAlign="center center" fxFlex="50">
-        Jeu de Go
+    <span fxLayout="row" fxLayoutAlign="center center" fxFlex="50" i18n="@@ng6GoToolbarTitle">
+        Go game
     </span>
     <span fxLayout="row" fxLayoutAlign="end center" fxFlex="25">
-        <mdc-text-field [formControl]="usernameControl" disabled class="ng6-go-username" fullwidth label="Nom d'utilisateur" dense=true maxlength="30" required></mdc-text-field>
+        <mdc-text-field [formControl]="usernameControl" class="ng6-go-username" fullwidth label="Nom d'utilisateur"
+                        dense=true maxlength="30" required></mdc-text-field>
+        <button mat-icon-button [matMenuTriggerFor]="menuLanguage">
+            <mat-icon>language</mat-icon>
+        </button>
+        <mat-menu #menuLanguage="matMenu">
+            <button mat-menu-item (click)="changeLocale('en')" [disabled]="disableLocale('en')">
+                <span class="flag-icon flag-icon-us"></span>
+                <span>EN</span>
+            </button>
+            <button mat-menu-item (click)="changeLocale('fr')" [disabled]="disableLocale('fr')">
+                <span class="flag-icon flag-icon-fr"></span>
+                <span>FR</span>
+            </button>
+        </mat-menu>
     </span>
 </mat-toolbar>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="ng2.template">
+        <body>
+            <trans-unit id="ng6GoChatPanelTitle" datatype="html">
+                <source>Chat</source>
+                <target>Chat</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-chat/ng6-go-chat.component.html
+                    </context>
+                    <context context-type="linenumber">2</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoGamesTitle" datatype="html">
+                <source>Pending games</source>
+                <target>Parties en attente</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-games/ng6-go-games.component.html
+                    </context>
+                    <context context-type="linenumber">3</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoGamesNewGameButton" datatype="html">
+                <source>New game</source>
+                <target>Nouvelle partie</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-games/ng6-go-games.component.html
+                    </context>
+                    <context context-type="linenumber">6</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoGamesJoinButton" datatype="html">
+                <source>Join</source>
+                <target>Rejoindre</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-games/ng6-go-games.component.html
+                    </context>
+                    <context context-type="linenumber">16</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoBoardActionsWaitingOpponent" datatype="html">
+                <source>Waiting for an opponent</source>
+                <target>En attente d&apos;un adversaire</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-board/ng6-go-board.component.html
+                    </context>
+                    <context context-type="linenumber">86</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoBoardActionsReadyButton" datatype="html">
+                <source>Ready</source>
+                <target>Prêt</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-board/ng6-go-board.component.html
+                    </context>
+                    <context context-type="linenumber">90</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoBoardActionsOpponentNotReady" datatype="html">
+                <source>Your opponent is not ready</source>
+                <target>Votre adversaire n&apos;est pas prêt</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-board/ng6-go-board.component.html
+                    </context>
+                    <context context-type="linenumber">94</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoToolbarTitle" datatype="html">
+                <source>Go game</source>
+                <target>Jeu de Go</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">
+                        app/shared/components/ng6-go-toolbar/ng6-go-toolbar.component.html
+                    </context>
+                    <context context-type="linenumber">8</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoOverviewTitle" datatype="html">
+                <source>
+                    <x id="INTERPOLATION" equiv-text="{{ game.active ? &apos;Turn &apos;+(game.steps+1) : &apos;-&apos;}}"/>
+                </source>
+                <target>
+                    <x id="INTERPOLATION" equiv-text="{{ game.active ? &apos;Tour &apos;+(game.steps+1) : &apos;-&apos;}}"/>
+                </target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">
+                        app/shared/components/ng6-go-overview/ng6-go-overview.component.html
+                    </context>
+                    <context context-type="linenumber">2</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoOverviewSubtitle" datatype="html">
+                <source>
+                    <x id="INTERPOLATION"
+                       equiv-text="{{ game.active ? &apos;Game in progress&apos; : &apos;Pending game&apos;}}"/>
+                </source>
+                <target>
+                    <x id="INTERPOLATION"
+                       equiv-text="{{ game.active ? &apos;Partie en cours&apos; : &apos;Partie en attente&apos;}}"/>
+                </target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">
+                        app/shared/components/ng6-go-overview/ng6-go-overview.component.html
+                    </context>
+                    <context context-type="linenumber">3</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoOverviewListTitle" datatype="html">
+                <source>Players :</source>
+                <target>Joueurs :</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">
+                        app/shared/components/ng6-go-overview/ng6-go-overview.component.html
+                    </context>
+                    <context context-type="linenumber">5</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoOverviewPlayerStatus" datatype="html">
+                <source>Ready</source>
+                <target>Prêt</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">
+                        app/shared/components/ng6-go-overview/ng6-go-overview.component.html
+                    </context>
+                    <context context-type="linenumber">17</context>
+                </context-group>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

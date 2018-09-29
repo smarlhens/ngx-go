@@ -1,4 +1,4 @@
-html, body{
+html, body {
     overflow: hidden;
 }
 
@@ -54,4 +54,8 @@ mat-toolbar.mat-toolbar-app {
 
 .no-select {
     @extend %noselect;
+}
+
+.flag-icon {
+    padding-right: 1rem;
 }

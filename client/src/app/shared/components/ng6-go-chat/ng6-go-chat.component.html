@@ -1,5 +1,5 @@
 <div class="ng6-go-chat-panel">
-    <div class="ng6-go-chat-panel-title">Chat</div>
+    <div class="ng6-go-chat-panel-title" i18n="@@ng6GoChatPanelTitle">Chat</div>
     <div #ng6GoChatPanelMessages class="ng6-go-chat-panel-messages" [scrollTop]="ng6GoChatPanelMessages.scrollHeight">
         <div class="ng6-go-chip-message" *ngFor="let message of messages; let i = index">
             <div *ngIf="displayDate(messages[i-1], message)" class="ng6-go-chip-message-date">

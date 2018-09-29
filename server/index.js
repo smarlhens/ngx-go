@@ -6,6 +6,7 @@ let server = http.Server(app);
 let url = require('url');
 let socketIO = require('socket.io');
 let io = socketIO(server);
+io.origins('*:*');
 const port = 1337;
 
 const Game = require('./dist/game.js').Game;

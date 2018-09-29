@@ -52,15 +52,6 @@ export class GoService {
     }
 
     /**
-     * Helper to stringify an x, y position (<e.g.> x = 1, y = 2) to a string (<e.g.> "1,2").
-     * @param x: x coordinate
-     * @param y: y coordinate
-     */
-    private static xy2str(x: number, y: number): string {
-        return x + "," + y;
-    }
-
-    /**
      * Helper to stringify a position object (<e.g.> {x: 1, y: 2}) to a string (<e.g.> "1,2").
      * @param pos: a position object
      */
@@ -155,7 +146,7 @@ export class GoService {
         let color = game.grid[x][y];
         let explore = {};
         let visited: { [strName: string]: boolean } = {};
-        explore[GoService.xy2str(x, y)] = true;
+        explore[x + "," + y] = true;
         while (!GoService.isEmpty(explore)) {
             let str = GoService.getFirst(explore);
             let pos = GoService.str2pos(str);

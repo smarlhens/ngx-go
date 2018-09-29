@@ -23,7 +23,8 @@ import {
         MatCardModule,
         MatMenuModule,
         MatIconModule,
-        MatDividerModule
+        MatDividerModule,
+        MatMenuModule
     ]
 })
 

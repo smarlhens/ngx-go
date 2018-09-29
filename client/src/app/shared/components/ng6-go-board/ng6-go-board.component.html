@@ -83,14 +83,14 @@
 
 <div class="ng6-go-board-panel-actions">
     <button *ngIf="game.players.length < 2" mdc-fab extended disabled>
-        <mdc-fab-label>En attente d'un adversaire</mdc-fab-label>
+        <mdc-fab-label i18n="@@ng6GoBoardActionsWaitingOpponent">Waiting for an opponent</mdc-fab-label>
     </button>
 
     <button *ngIf="game.players.length === 2 && !amIReady()" mdc-fab extended (click)="playerReady()">
-        <mdc-fab-label>Prêt</mdc-fab-label>
+        <mdc-fab-label i18n="@@ng6GoBoardActionsReadyButton">Ready</mdc-fab-label>
     </button>
 
     <button *ngIf="game.players.length === 2 && amIReady() && !isOpponentReady()" mdc-fab extended disabled>
-        <mdc-fab-label>Votre adversaire n'est pas prêt</mdc-fab-label>
+        <mdc-fab-label i18n="@@ng6GoBoardActionsOpponentNotReady">Your opponent is not ready</mdc-fab-label>
     </button>
 </div>

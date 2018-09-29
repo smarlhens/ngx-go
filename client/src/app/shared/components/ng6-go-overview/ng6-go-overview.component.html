@@ -1,8 +1,8 @@
 <div class="ng6-go-panel-overview">
-    <div class="ng6-go-panel-overview-title">{{ game.active ? 'Tour '+(game.steps+1) : '-'}}</div>
-    <div class="ng6-go-panel-overview-subtitle">{{ game.active ? 'Partie en cours' : 'Partie en attente'}}</div>
+    <div class="ng6-go-panel-overview-title" i18n="@@ng6GoOverviewTitle">{{ game.active ? 'Tour '+(game.steps+1) : '-'}}</div>
+    <div class="ng6-go-panel-overview-subtitle" i18n="@@ng6GoOverviewSubtitle">{{ game.active ? 'Partie en cours' : 'Partie en attente'}}</div>
     <div class="ng6-go-panel-overview-content">
-        <div class="mat-list-players-title">Joueurs :</div>
+        <div class="mat-list-players-title" i18n="@@ng6GoOverviewListTitle">Players :</div>
         <mat-list class="mat-list-players">
             <mat-list-item *ngFor="let player of game.players">
                 <span class="mat-list-players-item-icon">
@@ -14,7 +14,7 @@
                     </svg>
                 </span>
                 <span class="mat-list-players-item-name">{{player.name}}</span>
-                <span class="mat-list-players-item-status" *ngIf="player.ready">Ready</span>
+                <span class="mat-list-players-item-status" *ngIf="player.ready" i18n="@@ng6GoOverviewPlayerStatus">Ready</span>
             </mat-list-item>
         </mat-list>
 
