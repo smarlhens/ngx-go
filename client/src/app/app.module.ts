@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -20,6 +20,7 @@ import {Ng6GoOverviewComponent} from './shared/components/ng6-go-overview/ng6-go
 import {registerLocaleData} from "@angular/common";
 import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
+import {environment} from "../environments/environment";
 
 registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 
@@ -46,7 +47,8 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
         FlexLayoutModule,
         ReactiveFormsModule
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    providers: [{provide: LOCALE_ID, useValue: environment.locale}]
 })
 export class AppModule {
 }

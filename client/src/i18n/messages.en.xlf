@@ -29,6 +29,14 @@
                     <context context-type="linenumber">6</context>
                 </context-group>
             </trans-unit>
+            <trans-unit id="ng6GoGamesNewGameButtonTitle" datatype="html">
+                <source>New game</source>
+                <target>New game</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-games/ng6-go-games.component.html</context>
+                    <context context-type="linenumber">6</context>
+                </context-group>
+            </trans-unit>
             <trans-unit id="ng6GoGamesJoinButton" datatype="html">
                 <source>Join</source>
                 <target>Join</target>
@@ -65,6 +73,18 @@
                     <context context-type="linenumber">94</context>
                 </context-group>
             </trans-unit>
+            <trans-unit id="ng6GoToolbarBackButton" datatype="html">
+                <source>Previous page</source>
+                <target>Previous page</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-toolbar/ng6-go-toolbar.component.html</context>
+                    <context context-type="linenumber">6</context>
+                </context-group>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-toolbar/ng6-go-toolbar.component.html</context>
+                    <context context-type="linenumber">5</context>
+                </context-group>
+            </trans-unit>
             <trans-unit id="ng6GoToolbarTitle" datatype="html">
                 <source>Go game</source>
                 <target>Go game</target>
@@ -75,13 +95,25 @@
                     <context context-type="linenumber">8</context>
                 </context-group>
             </trans-unit>
+            <trans-unit id="ng6GoToolbarUsernameField" datatype="html">
+                <source>Username</source>
+                <target>Username</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-toolbar/ng6-go-toolbar.component.html</context>
+                    <context context-type="linenumber">13</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoToolbarLanguageButton" datatype="html">
+                <source>Language</source>
+                <target>Language</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-toolbar/ng6-go-toolbar.component.html</context>
+                    <context context-type="linenumber">15</context>
+                </context-group>
+            </trans-unit>
             <trans-unit id="ng6GoOverviewTitle" datatype="html">
-                <source>
-                    <x id="INTERPOLATION" equiv-text="{{ game.active ? &apos;Turn &apos;+(game.steps+1) : &apos;-&apos;}}"/>
-                </source>
-                <target>
-                    <x id="INTERPOLATION" equiv-text="{{ game.active ? &apos;Turn &apos;+(game.steps+1) : &apos;-&apos;}}"/>
-                </target>
+                <source><x id="INTERPOLATION" equiv-text="{{ game.active ? &apos;Turn &apos;+(game.steps+1) : &apos;-&apos;}}"/></source>
+                <target><x id="INTERPOLATION" equiv-text="{{ game.active ? &apos;Turn &apos;+(game.steps+1) : &apos;-&apos;}}"/></target>
                 <context-group purpose="location">
                     <context context-type="sourcefile">
                         app/shared/components/ng6-go-overview/ng6-go-overview.component.html
@@ -90,14 +122,8 @@
                 </context-group>
             </trans-unit>
             <trans-unit id="ng6GoOverviewSubtitle" datatype="html">
-                <source>
-                    <x id="INTERPOLATION"
-                       equiv-text="{{ game.active ? &apos;Game in progress&apos; : &apos;Pending game&apos;}}"/>
-                </source>
-                <target>
-                    <x id="INTERPOLATION"
-                       equiv-text="{{ game.active ? &apos;Game in progress&apos; : &apos;Pending game&apos;}}"/>
-                </target>
+                <source><x id="INTERPOLATION" equiv-text="{{ game.active ? &apos;Game in progress&apos; : &apos;Pending game&apos;}}"/></source>
+                <target><x id="INTERPOLATION" equiv-text="{{ game.active ? &apos;Game in progress&apos; : &apos;Pending game&apos;}}"/></target>
                 <context-group purpose="location">
                     <context context-type="sourcefile">
                         app/shared/components/ng6-go-overview/ng6-go-overview.component.html

@@ -83,10 +83,10 @@ export class GameService {
         });
     }
 
-    public getDeleteGame() {
+    public onDeleteGame() {
         return Observable.create((observer) => {
-            this.nsService.socket.on('delete_game', (game: Game) => {
-                observer.next(game);
+            this.nsService.socket.on('delete_game', (id: string) => {
+                observer.next(id);
             });
         });
     }

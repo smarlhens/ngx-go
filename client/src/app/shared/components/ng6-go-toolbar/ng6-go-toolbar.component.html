@@ -2,25 +2,25 @@
     <span *ngIf="router.url==='/' && (!game || (game && game.active))"></span>
     <span fxLayout="row" fxLayoutAlign="start center" fxFlex="25">
         <button *ngIf="router.url!=='/' && (!game || (game && !game.active))" id="backButton" #backBtn mat-icon-button
-                (click)="goBack()" title="Page précédente">
-          <mat-icon aria-label="Page précédente">arrow_back</mat-icon>
+                (click)="goBack()" i18n-title="@@ng6GoToolbarBackButton" title="Previous page">
+          <mat-icon i18n-aria-label="@@ng6GoToolbarBackButton" aria-label="Previous page">arrow_back</mat-icon>
         </button>
     </span>
     <span fxLayout="row" fxLayoutAlign="center center" fxFlex="50" i18n="@@ng6GoToolbarTitle">
         Go game
     </span>
     <span fxLayout="row" fxLayoutAlign="end center" fxFlex="25">
-        <mdc-text-field [formControl]="usernameControl" class="ng6-go-username" fullwidth label="Nom d'utilisateur"
+        <mdc-text-field [formControl]="usernameControl" class="ng6-go-username" fullwidth i18n-label="@@ng6GoToolbarUsernameField" label="Username"
                         dense=true maxlength="30" required [ngStyle]="{'padding-right': (router.url === '/' ? '1rem' : '0')}"></mdc-text-field>
-        <button mat-icon-button [matMenuTriggerFor]="menuLanguage" *ngIf="router.url === '/'">
+        <button mat-icon-button [matMenuTriggerFor]="menuLanguage" *ngIf="router.url === '/'" i18n-title="@@ng6GoToolbarLanguageButton" title="Language">
             <mat-icon>language</mat-icon>
         </button>
         <mat-menu #menuLanguage="matMenu">
-            <a type="button" href="https://ng6-go.marlhens.com" mat-menu-item [disabled]="disableLocale('en')">
+            <a type="button" href="https://ng6-go.marlhens.com" mat-menu-item [disabled]="disableLocale('en')" title="EN">
                 <span class="flag-icon flag-icon-us"></span>
                 <span>EN</span>
             </a>
-            <a type="button" href="https://ng6-go.marlhens.fr" mat-menu-item [disabled]="disableLocale('fr')">
+            <a type="button" href="https://ng6-go.marlhens.fr" mat-menu-item [disabled]="disableLocale('fr')" title="FR">
                 <span class="flag-icon flag-icon-fr"></span>
                 <span>FR</span>
             </a>

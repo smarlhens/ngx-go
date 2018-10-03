@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {GoService} from "../../services/go.service";
 import {Router} from "@angular/router";
 import {GameService} from "../../services/game.service";
@@ -15,7 +15,7 @@ export class Ng6GoGamesComponent implements OnInit {
     public games: Game[];
     public gamesList: Observable<Game[]>;
 
-    constructor(private gameService: GameService, private goService: GoService, private router: Router) {
+    constructor(private gameService: GameService, private goService: GoService, private router: Router, private zone: NgZone) {
     }
 
     ngOnInit(): void {
@@ -35,11 +35,11 @@ export class Ng6GoGamesComponent implements OnInit {
                 }
             })
         ;
-        this.gameService.getDeleteGame()
-            .subscribe((game: Game) => {
-                let id = this.games.findIndex((_game) => _game.id === game.id);
-                if (-1 !== id) {
-                    this.games.splice(id, 1);
+        this.gameService.onDeleteGame()
+            .subscribe((id: string) => {
+                let index = this.games.findIndex((_game) => _game.id === id);
+                if (-1 !== index) {
+                    this.games.splice(index, 1);
                 }
             })
         ;

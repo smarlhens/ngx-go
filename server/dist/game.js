@@ -11,6 +11,7 @@ var Game = /** @class */ (function () {
         this.turn = 0;
         // freeze the board if inactive
         this.active = false;
+        this.createdAt = new Date();
         this.id = id;
     }
     return Game;

@@ -5,6 +5,7 @@ import {Message} from "../../models/message";
 import {UserService} from "../../services/user.service";
 import {GoService} from "../../services/go.service";
 import {Game} from "../../models/game";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'ng6-go-chat',
@@ -15,6 +16,7 @@ export class Ng6GoChatComponent implements OnInit {
     public sender: string | null;
     public messages: Message[];
     public message: Message;
+    public locale = environment.locale;
     private game: Game;
 
     constructor(

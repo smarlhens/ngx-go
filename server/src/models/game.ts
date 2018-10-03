@@ -20,8 +20,12 @@ export class Game {
     // freeze the board if inactive
     active: boolean = false;
     id: string;
+    createdAt: Date;
+    startedAt: Date;
+    finishedAt: Date;
 
     constructor(id: string) {
+        this.createdAt = new Date();
         this.id = id;
     }
 

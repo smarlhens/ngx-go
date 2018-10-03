@@ -4,26 +4,41 @@ let app = express();
 let http = require('http');
 let server = http.Server(app);
 let url = require('url');
+let events = require('events');
 let socketIO = require('socket.io');
 let io = socketIO(server);
 io.origins('*:*');
 const port = 1337;
-
 const Game = require('./dist/game.js').Game;
 
 let games = [];
 let messages = [];
 
+events.EventEmitter.prototype._maxListeners = 0;
+events.EventEmitter.prototype.defaultMaxListeners = 0;
+
 server.listen(port, () => {
     console.log(`started on port: ${port}`);
 });
-
-process.setMaxListeners(Infinity);
 
 const routes = {
     'game': '^\\/game\\/[a-z0-9\\-]+$',
     'default': '^\\/$'
 };
+
+function deleteOldGames() {
+    if (typeof games !== "undefined" && null !== games && games.length > 0) {
+        games.forEach((game, gameIndex) => {
+            if (typeof game !== "undefined" && null !== game && (game.players.length === 0 || Math.round(((new Date()).getTime() - game.createdAt.getTime()) / 60000) >= 10)) {
+                io.of('/').emit('delete_game', game.id);
+                games.splice(gameIndex, 1);
+            }
+        });
+    }
+}
+
+// each 10 minutes, delete old games || empty games
+setInterval(deleteOldGames, 600000);
 
 io.sockets.on('connection', function (socket) {
     const ns = url.parse(socket.handshake.url, true).query.ns;
