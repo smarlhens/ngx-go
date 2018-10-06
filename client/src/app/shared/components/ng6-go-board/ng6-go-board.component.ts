@@ -4,6 +4,8 @@ import {Game} from "../../models/game";
 import {UserService} from "../../services/user.service";
 import {GameService} from "../../services/game.service";
 import {distinctUntilChanged} from "rxjs/operators";
+import {MatSnackBar} from "@angular/material";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'ng6-go-board',
@@ -14,7 +16,7 @@ export class Ng6GoBoardComponent implements OnInit {
     public game: Game;
     public username: string;
 
-    constructor(private goService: GoService, private userService: UserService, private gameService: GameService) {
+    constructor(private goService: GoService, private userService: UserService, private gameService: GameService, public snackBar: MatSnackBar, private translate: TranslateService) {
     }
 
     ngOnInit(): void {
@@ -48,6 +50,7 @@ export class Ng6GoBoardComponent implements OnInit {
         this.gameService.onNewMove()
             .subscribe((pos: { x: number, y: number }) => {
                 this.goService.move(this.game, pos.x, pos.y);
+                this.turnAlert();
             })
         ;
     }
@@ -60,6 +63,7 @@ export class Ng6GoBoardComponent implements OnInit {
     public onClick(x: number, y: number): void {
         console.log('x:' + x + ', y:' + y);
         this.goService.move(this.game, x, y);
+        this.turnAlert();
     }
 
     /**
@@ -79,6 +83,18 @@ export class Ng6GoBoardComponent implements OnInit {
 
     public isOpponentReady(): boolean {
         return this.game.players.every((player) => player.ready === true);
+    }
+
+    private turnAlert(): void {
+        let snackBarMessage = null;
+        if ((1 === this.game.turn && this.username === this.game.black) || (-1 === this.game.turn && this.username === this.game.white)) {
+            snackBarMessage = 'ng6-go-board.snackbar.me';
+        } else {
+            snackBarMessage = 'ng6-go-board.snackbar.opponent';
+        }
+        this.translate.get(snackBarMessage).subscribe((message: string) => {
+            this.snackBar.open(message, 'OK', {duration: 3000});
+        });
     }
 
 }

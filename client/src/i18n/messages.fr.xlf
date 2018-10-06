@@ -112,23 +112,27 @@
                 </context-group>
             </trans-unit>
             <trans-unit id="ng6GoOverviewTitle" datatype="html">
-                <source><x id="INTERPOLATION" equiv-text="{{ game.active ? &apos;Turn &apos;+(game.steps+1) : &apos;-&apos;}}"/></source>
-                <target><x id="INTERPOLATION" equiv-text="{{ game.active ? &apos;Tour &apos;+(game.steps+1) : &apos;-&apos;}}"/></target>
+                <source>Turn <x id="INTERPOLATION" equiv-text="{{game.steps+1}}"/></source>
+                <target>Tour <x id="INTERPOLATION" equiv-text="{{game.steps+1}}"/></target>
                 <context-group purpose="location">
-                    <context context-type="sourcefile">
-                        app/shared/components/ng6-go-overview/ng6-go-overview.component.html
-                    </context>
-                    <context context-type="linenumber">2</context>
+                    <context context-type="sourcefile">app/shared/components/ng6-go-overview/ng6-go-overview.component.html</context>
+                    <context context-type="linenumber">3</context>
                 </context-group>
             </trans-unit>
-            <trans-unit id="ng6GoOverviewSubtitle" datatype="html">
-                <source><x id="INTERPOLATION" equiv-text="{{ game.active ? &apos;Game in progress&apos; : &apos;Pending game&apos;}}"/></source>
-                <target><x id="INTERPOLATION" equiv-text="{{ game.active ? &apos;Partie en cours&apos; : &apos;Partie en attente&apos;}}"/></target>
+            <trans-unit id="ng6GoOverviewSubtitleGameActive" datatype="html">
+                <source>Game in progress</source>
+                <target>Partie en cours</target>
                 <context-group purpose="location">
-                    <context context-type="sourcefile">
-                        app/shared/components/ng6-go-overview/ng6-go-overview.component.html
-                    </context>
-                    <context context-type="linenumber">3</context>
+                    <context context-type="sourcefile">app/shared/components/ng6-go-overview/ng6-go-overview.component.html</context>
+                    <context context-type="linenumber">5</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoOverviewSubtitleGameInactive" datatype="html">
+                <source>Pending game</source>
+                <target>Partie en attente</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-overview/ng6-go-overview.component.html</context>
+                    <context context-type="linenumber">6</context>
                 </context-group>
             </trans-unit>
             <trans-unit id="ng6GoOverviewListTitle" datatype="html">

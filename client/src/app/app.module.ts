@@ -21,8 +21,17 @@ import {registerLocaleData} from "@angular/common";
 import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
 import {environment} from "../environments/environment";
+import {MatSnackBarModule} from "@angular/material";
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(httpClient: HttpClient) {
+    return new TranslateHttpLoader(httpClient);
+}
 
 @NgModule({
     declarations: [
@@ -45,7 +54,16 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
         MdcModule,
         FormsModule,
         FlexLayoutModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatSnackBarModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
     ],
     bootstrap: [AppComponent],
     providers: [{provide: LOCALE_ID, useValue: environment.locale}]

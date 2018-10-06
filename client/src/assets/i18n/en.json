@@ -1,0 +1,8 @@
+{
+    "ng6-go-board": {
+        "snackbar": {
+            "me": "It's your turn!",
+            "opponent": "It's your opponent's turn!"
+        }
+    }
+}
