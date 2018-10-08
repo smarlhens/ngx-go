@@ -17,7 +17,8 @@ ng6-go-toolbar {
                 text-align: end !important;
             }
 
-            input {
+            input,
+            input::placeholder {
                 color: white;
             }
 

@@ -21,7 +21,6 @@ import {registerLocaleData} from "@angular/common";
 import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
 import {environment} from "../environments/environment";
-import {MatSnackBarModule} from "@angular/material";
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
@@ -55,7 +54,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         FormsModule,
         FlexLayoutModule,
         ReactiveFormsModule,
-        MatSnackBarModule,
         HttpClientModule,
         TranslateModule.forRoot({
             loader: {

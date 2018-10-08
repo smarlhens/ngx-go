@@ -32,13 +32,10 @@ export class Ng6GoToolbarComponent implements OnInit {
 
     ngOnInit(): void {
         this.goService.game.subscribe((game) => this.game = game);
-        this.zone.run(() => {
-                const randomName = 'player_' + Math.random().toString(36).substr(2, 9);
-                this.usernameControl.setValue(randomName);
-                this.usernameControl.disable();
-                this.userService.updateUsername(randomName);
-            }
-        );
+        this.userService.username.subscribe((username) => {
+            this.usernameControl.setValue(username);
+            this.usernameControl.disable();
+        });
         this.usernameControl.valueChanges
             .pipe(debounceTime(250))
             .pipe(distinctUntilChanged())

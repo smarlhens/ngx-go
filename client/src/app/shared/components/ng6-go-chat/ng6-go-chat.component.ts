@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ChatService} from "../../services/chat.service";
-import {distinctUntilChanged, filter, flatMap, take} from "rxjs/operators";
+import {distinctUntilChanged, filter, flatMap, take, tap} from "rxjs/operators";
 import {Message} from "../../models/message";
 import {UserService} from "../../services/user.service";
 import {GoService} from "../../services/go.service";
@@ -17,6 +17,7 @@ export class Ng6GoChatComponent implements OnInit {
     public messages: Message[];
     public message: Message;
     public locale = environment.locale;
+    public loading: boolean;
     private game: Game;
 
     constructor(
@@ -56,6 +57,7 @@ export class Ng6GoChatComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loading = true;
         this.messages = [];
         this.userService.username
             .pipe(
@@ -66,8 +68,9 @@ export class Ng6GoChatComponent implements OnInit {
         this.chatService.getMessages()
             .pipe(
                 take(1),
+                tap(() => this.loading = false),
                 flatMap((messages: Message[]) => messages),
-                filter((message: Message) => typeof message.content !== 'undefined' && typeof message.sender !== 'undefined' && message.content.trim().length > 0 && message.sender !== this.sender),
+                filter((message: Message) => typeof message.content !== 'undefined' && typeof message.sender !== 'undefined' && message.content.trim().length > 0),
                 distinctUntilChanged((a: Message, b: Message) => a.content === b.content && a.date === b.date && a.sender === b.sender)
             )
             .subscribe((message: Message) => {

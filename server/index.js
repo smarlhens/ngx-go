@@ -68,8 +68,11 @@ io.sockets.on('connection', function (socket) {
             });
 
             socket.on('get_messages', () => {
-                // send all messages to the sender
                 nsp.to(socket.id).emit('get_messages', messages['default']);
+            });
+
+            socket.on('get_username', () => {
+                nsp.to(socket.id).emit('get_username', 'player_' + Math.random().toString(36).substr(2, 9));
             });
 
             socket.on('new_game', (id) => {

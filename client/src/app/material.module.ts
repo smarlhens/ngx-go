@@ -8,7 +8,9 @@ import {
     MatIconModule,
     MatListModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
     MatSidenavModule,
+    MatSnackBarModule,
     MatToolbarModule
 } from '@angular/material';
 
@@ -24,7 +26,9 @@ import {
         MatMenuModule,
         MatIconModule,
         MatDividerModule,
-        MatMenuModule
+        MatMenuModule,
+        MatProgressSpinnerModule,
+        MatSnackBarModule
     ]
 })
 
