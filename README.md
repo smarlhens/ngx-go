@@ -3,6 +3,9 @@
 Feel free to submit your suggestions for improvements to help this project evolve.
 
 TODO / IDEAS :
+* footer : Add a footer
+* footer : Add conditions of uses
+* footer : Add number of online players
 * game : \[bug] when the user refreshes the page, he is not redirected to the current part, the client automatically creates a new part
 * game : If the player leaves the namespace, declare the victory of the remaining player
 * game : Custom game settings (dimension, handicaps)

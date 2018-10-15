@@ -1,16 +1,29 @@
 {
-  "name": "server",
+  "name": "ng6-go-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "author": "Samuel MARLHENS",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
+    "tsc": "tsc",
+    "dev": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/index.js\"",
+    "start": "tsc && node dist/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3",
+    "@types/express": "^4.16.0",
+    "@types/socket.io": "^1.4.38",
+    "express": "^4.16.4",
     "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/mocha": "2.2.41",
+    "@types/node": "^8.10.36",
+    "concurrently": "^4.0.1",
+    "mocha": "5.2.0",
+    "nodemon": "^1.18.4",
+    "ts-node": "5.0.1",
+    "tsc": "1.20150623.0",
+    "tslint": "5.9.1",
+    "typescript": "^2.3.3"
   }
 }
