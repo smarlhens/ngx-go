@@ -6,6 +6,12 @@ html, body {
     overflow-y: inherit !important;
 }
 
+@media handheld, screen and (max-width: 600px) {
+    .mat-drawer-content {
+        overflow-y: scroll !important;
+    }
+}
+
 .app-content {
     height: calc(100% - 64px);
 }

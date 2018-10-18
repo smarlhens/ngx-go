@@ -8,7 +8,7 @@
             <div *ngIf="displayDate(messages[i-1], message)" class="ng6-go-chip-message-date">
                 {{message.date|date:('en' === locale ? 'MMMM dd, yyyy, h:mm a' : 'dd MMMM yyyy, HH:mm')}}
             </div>
-            <div *ngIf="message.sender !== sender && (undefined === messages[i-1] || (undefined !== messages[i-1] && message.sender !== messages[i-1].sender))" class="ng6-go-chip-message-sender">
+            <div *ngIf="message.sender !== sender && (displayDate(messages[i-1], message) || (undefined === messages[i-1] || (undefined !== messages[i-1] && message.sender !== messages[i-1].sender)))" class="ng6-go-chip-message-sender">
                 {{message.sender}}
             </div>
             <div [ngClass]="message.sender === sender ? 'ng6-go-chip-message-me' : 'ng6-go-chip-message-other'">

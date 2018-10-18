@@ -55,3 +55,15 @@ ng6-go-board {
         fill: #ff0000
     }
 }
+
+@media handheld, screen and (max-width: 600px) {
+    ng6-go-board {
+        .ng6-go-board-svg {
+            max-height: 100%;
+        }
+
+        .ng6-go-board-panel-actions {
+            height: initial;
+        }
+    }
+}

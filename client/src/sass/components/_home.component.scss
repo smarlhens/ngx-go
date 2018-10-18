@@ -8,3 +8,9 @@ app-home{
     align-items: stretch;
     overflow: hidden;
 }
+
+@media handheld, screen and (max-width: 600px) {
+    app-home {
+        flex-direction: column;
+    }
+}

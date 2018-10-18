@@ -1,4 +1,4 @@
-app-game{
+app-game {
     @extend %display-flex;
     flex-direction: row;
     box-sizing: border-box;
@@ -6,4 +6,11 @@ app-game{
     height: 100%;
     place-content: center stretch;
     align-items: stretch;
+}
+
+@media handheld, screen and (max-width: 600px) {
+    app-game {
+        flex-direction: column;
+        height: initial;
+    }
 }
