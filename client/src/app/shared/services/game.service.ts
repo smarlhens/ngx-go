@@ -21,7 +21,7 @@ export class GameService {
     public onNewGame() {
         return Observable.create((observer) => {
             this.nsService.socket.on('new_game', (id: string) => {
-                observer.next(new Game(id));
+                observer.next(id);
             });
         });
     }
@@ -116,4 +116,19 @@ export class GameService {
         });
     }
 
+    public onGameReady() {
+        return Observable.create((observer) => {
+            this.nsService.socket.on('game_ready', (id: string) => {
+                observer.next(id);
+            });
+        });
+    }
+
+    public onGamePending() {
+        return Observable.create((observer) => {
+            this.nsService.socket.on('game_pending', (id: string) => {
+                observer.next(id);
+            });
+        });
+    }
 }

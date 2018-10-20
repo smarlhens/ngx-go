@@ -29,18 +29,23 @@ export class Ng6GoGamesComponent implements OnInit {
             })
         ;
         this.gameService.onNewGame()
-            .subscribe((game: Game) => {
-                if (!this.games.find((_game) => _game.id === game.id)) {
-                    this.games.push(game);
-                }
+            .subscribe((id: string) => {
+                this.add(id);
             })
         ;
         this.gameService.onDeleteGame()
             .subscribe((id: string) => {
-                let index = this.games.findIndex((_game) => _game.id === id);
-                if (-1 !== index) {
-                    this.games.splice(index, 1);
-                }
+                this.delete(id);
+            })
+        ;
+        this.gameService.onGameReady()
+            .subscribe((id: string) => {
+                this.delete(id);
+            })
+        ;
+        this.gameService.onGamePending()
+            .subscribe((id: string) => {
+                this.add(id);
             })
         ;
     }
@@ -52,6 +57,19 @@ export class Ng6GoGamesComponent implements OnInit {
 
     public joinGame(id: string): void {
         this.router.navigate(['/game', id]);
+    }
+
+    private delete(id: string) {
+        let index = this.games.findIndex((_game) => _game.id === id);
+        if (-1 !== index) {
+            this.games.splice(index, 1);
+        }
+    }
+
+    private add(id: string) {
+        if (!this.games.find((game) => game.id === id)) {
+            this.games.push(new Game(id));
+        }
     }
 
 }
