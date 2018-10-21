@@ -1,11 +1,9 @@
 export class Player {
+    public uuid: string;
     public name: string;
-    public ready: boolean;
     public socket: string;
 
-    constructor({name, ready, socket}) {
-        this.name = name;
-        this.ready = ready;
-        this.socket = socket;
+    constructor() {
+        this.socket = null;
     }
 }

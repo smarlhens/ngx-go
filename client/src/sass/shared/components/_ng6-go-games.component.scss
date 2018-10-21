@@ -2,7 +2,7 @@ ng6-go-games {
     @extend %display-flex;
     flex-direction: row;
     box-sizing: border-box;
-    max-height: 100%;
+    height: 100%;
     place-content: center stretch;
     align-items: stretch;
 
@@ -21,10 +21,11 @@ ng6-go-games {
 
         .mat-card-content {
             overflow: hidden;
-            max-height: 100%;
+            height: 100%;
 
             .mat-list {
-                max-height: 100%;
+                width: 100%;
+                height: 100%;
                 overflow-y: auto;
 
                 .mat-list-item-game .mat-list-item-content {

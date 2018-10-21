@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {NamespaceService} from "./namespace.service";
 import {Observable} from "rxjs";
 import {Game} from "../models/game";
+import {Player} from "../models/player";
 
 @Injectable({
     providedIn: 'root'
@@ -11,25 +12,27 @@ export class GameService {
     constructor(private nsService: NamespaceService) {
     }
 
-    /**
-     * @param game
-     */
-    public newGame(game: Game): void {
-        this.nsService.socket.emit('new_game', game.id);
-    }
-
-    public onNewGame() {
+    public newGame() {
+        this.nsService.socket.emit('new_game');
         return Observable.create((observer) => {
-            this.nsService.socket.on('new_game', (id: string) => {
-                observer.next(id);
+            this.nsService.socket.on('new_uuid', (uuid: string) => {
+                observer.next(uuid);
             });
         });
     }
 
-    public getAvailableGames() {
-        this.nsService.socket.emit('get_available_games');
+    public onNewGame() {
         return Observable.create((observer) => {
-            this.nsService.socket.on('get_available_games', (games: Game[]) => {
+            this.nsService.socket.on('new_game', (uuid: string) => {
+                observer.next(uuid);
+            });
+        });
+    }
+
+    public getAll() {
+        this.nsService.socket.emit('get_all_games');
+        return Observable.create((observer) => {
+            this.nsService.socket.on('get_all_games', (games: Game[]) => {
                 observer.next(games);
             });
         });
@@ -37,56 +40,56 @@ export class GameService {
 
     /**
      * @param game
-     * @param name
+     * @param player
      */
-    public joinGame(game: Game, name: string): void {
-        this.nsService.socket.emit('join_game', game.id, name);
+    public joinGame(game: Game, player: Player): void {
+        this.nsService.socket.emit('join_game', game.uuid, player.uuid);
     }
 
     public onPlayerJoin() {
         return Observable.create((observer) => {
-            this.nsService.socket.on('join_game', (name: string) => {
-                observer.next(name);
+            this.nsService.socket.on('join_game', (player: Player) => {
+                observer.next(player);
             });
         });
     }
 
     /**
      * @param game
-     * @param name
+     * @param playerUuid
      */
-    public leaveGame(game: Game, name: string): void {
-        this.nsService.socket.emit('leave_game', game.id, name);
+    public leaveGame(game: Game, playerUuid: string): void {
+        this.nsService.socket.emit('leave_game', game.uuid, playerUuid);
     }
 
     public onPlayerLeave() {
         return Observable.create((observer) => {
-            this.nsService.socket.on('leave_game', (name: string) => {
-                observer.next(name);
+            this.nsService.socket.on('leave_game', (playerUuid: string) => {
+                observer.next(playerUuid);
             });
         });
     }
 
     /**
      * @param game
-     * @param name
+     * @param playerUuid
      */
-    public playerReady(game: Game, name: string): void {
-        this.nsService.socket.emit('player_ready', game.id, name);
+    public playerReady(game: Game, playerUuid: string): void {
+        this.nsService.socket.emit('player_ready', game.uuid, playerUuid);
     }
 
     public onPlayerReady() {
         return Observable.create((observer) => {
-            this.nsService.socket.on('player_ready', (name: string) => {
-                observer.next(name);
+            this.nsService.socket.on('player_ready', (playerUuid: string) => {
+                observer.next(playerUuid);
             });
         });
     }
 
     public onDeleteGame() {
         return Observable.create((observer) => {
-            this.nsService.socket.on('delete_game', (id: string) => {
-                observer.next(id);
+            this.nsService.socket.on('delete_game', (uuid: string) => {
+                observer.next(uuid);
             });
         });
     }
@@ -105,7 +108,7 @@ export class GameService {
      * @param y
      */
     public move(game: Game, x: number, y: number): void {
-        this.nsService.socket.emit('new_move', game.id, x, y);
+        this.nsService.socket.emit('new_move', game.uuid, x, y);
     }
 
     public onNewMove() {
@@ -118,16 +121,16 @@ export class GameService {
 
     public onGameReady() {
         return Observable.create((observer) => {
-            this.nsService.socket.on('game_ready', (id: string) => {
-                observer.next(id);
+            this.nsService.socket.on('game_ready', (uuid: string) => {
+                observer.next(uuid);
             });
         });
     }
 
     public onGamePending() {
         return Observable.create((observer) => {
-            this.nsService.socket.on('game_pending', (id: string) => {
-                observer.next(id);
+            this.nsService.socket.on('game_pending', (uuid: string) => {
+                observer.next(uuid);
             });
         });
     }

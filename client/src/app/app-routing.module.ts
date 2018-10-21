@@ -4,7 +4,7 @@ import {HomeComponent} from './components/home/home.component';
 import {GameComponent} from './components/game/game.component';
 
 const routes: Routes = [
-    {path: 'game/:id', component: GameComponent},
+    {path: 'game/:uuid', component: GameComponent},
     {path: '', component: HomeComponent}
 ];
 

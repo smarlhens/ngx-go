@@ -1,5 +1,5 @@
 import {Message} from "../models/message";
-import {GameController} from "./GameController";
+import {GameController} from "./game.controller";
 
 export class MessageController {
 
@@ -17,7 +17,7 @@ export class MessageController {
         const last = this.messages[ns][this.messages[ns].length - 1];
 
         // check if new and last this.messages are distinct
-        if (undefined === last || (undefined !== last && !(last.content === message.content && last.date === message.date && last.sender === message.sender))) {
+        if (undefined === last || (undefined !== last && !(last.content === message.content && last.date === message.date && last.sender.uuid === message.sender.uuid))) {
             socket.join('chat');
             this.messages[ns].push(message);
 
@@ -25,14 +25,14 @@ export class MessageController {
                 // send new message to all clients except sender
                 socket.broadcast.to('chat').emit('new_message', message);
             } else {
-                const game = this.gameController.getById(ns);
+                const game = this.gameController.getByUuid(ns);
                 if (typeof game !== "undefined" && null !== game) {
                     // get the opponent if exist
-                    const opponent = game.players.find((player) => player.socket !== socket.id);
+                    const opponent = game.players.find((player) => player.self.socket !== socket.id);
                     console.log(opponent);
                     if (typeof opponent !== "undefined") {
                         // send new message to the opponent
-                        nsp.to(opponent.socket).emit('new_message', message);
+                        nsp.to(opponent.self.socket).emit('new_message', message);
                     }
                 }
             }
@@ -41,7 +41,6 @@ export class MessageController {
 
     public getAll(nsp: any, socket: any, ns = this.defaultNS) {
         this.init(ns);
-        console.log('get_messages');
         nsp.to(socket.id).emit('get_messages', this.messages[ns]);
     }
 

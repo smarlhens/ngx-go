@@ -1,11 +1,13 @@
+import uuid = require('uuid');
+
 export class Player {
+    public uuid: string;
     public name: string;
-    public ready: boolean;
     public socket: string;
 
-    constructor({name, ready, socket}) {
+    constructor(name, socket) {
+        this.uuid = uuid.v4();
         this.name = name;
-        this.ready = ready;
         this.socket = socket;
     }
 }

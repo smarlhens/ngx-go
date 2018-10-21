@@ -14,7 +14,7 @@ export class Ng6GoOverviewComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.goService.game.subscribe((game) => this.game = game);
+        this.goService.game$.subscribe((game) => this.game = game);
     }
 
 }

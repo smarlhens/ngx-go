@@ -14,19 +14,19 @@ export class Game {
     history: Movement[] = [];
     lines;
     stars;
-    players: Player[] = [];
+    players: {self: Player, ready: boolean}[] = [];
     // 1: black; -1: white; 0: empty
     turn: number = 0;
     // freeze the board if inactive
     active: boolean = false;
-    id: string;
+    uuid: string;
     createdAt: Date;
     startedAt: Date;
     finishedAt: Date;
 
-    constructor(id: string) {
+    constructor(uuid: string) {
         this.createdAt = new Date();
-        this.id = id;
+        this.uuid = uuid;
     }
 
 }

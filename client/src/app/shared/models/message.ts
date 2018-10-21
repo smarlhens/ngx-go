@@ -1,5 +1,7 @@
+import {Player} from "./player";
+
 export class Message {
-    public sender: string;
+    public sender: Player;
     public content: string;
     public date: Date;
 

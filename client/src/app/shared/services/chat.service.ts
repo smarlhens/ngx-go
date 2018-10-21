@@ -19,12 +19,12 @@ export class ChatService {
      */
     public sendMessage(message: Message, game: Game = null) {
         message.date = moment().toDate();
-        this.nsService.socket.emit('new_message', message, (null !== game ? game.id : null));
+        this.nsService.socket.emit('new_message', message, (null !== game ? game.uuid : null));
     }
 
     public onNewMessage() {
         return Observable.create((observer) => {
-            this.nsService.socket.on('new_message', (message) => {
+            this.nsService.socket.on('new_message', (message: Message) => {
                 observer.next(message);
             });
         });

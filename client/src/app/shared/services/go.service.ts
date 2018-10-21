@@ -3,6 +3,8 @@ import {Game} from "../models/game";
 import {BehaviorSubject} from "rxjs";
 import {GameService} from "./game.service";
 import {Movement} from "../models/movement";
+import {Player} from "../models/player";
+import {PlayerService} from "./player.service";
 
 @Injectable({
     providedIn: 'root'
@@ -10,9 +12,9 @@ import {Movement} from "../models/movement";
 export class GoService {
 
     private gameSource = new BehaviorSubject<Game>(null);
-    public game = this.gameSource.asObservable();
+    public game$ = this.gameSource.asObservable();
 
-    constructor(private gameService: GameService) {
+    constructor(private gameService: GameService, private playerService: PlayerService) {
     }
 
     /**
@@ -300,8 +302,8 @@ export class GoService {
     /**
      * Helper to create game.
      */
-    public createGame(id: string = this.uuid(), config: any = {dimension: 19, handicaps: 0}): Game {
-        const game = new Game(id);
+    public createGame(uuid: string, config: any = {dimension: 19, handicaps: 0}): Game {
+        const game = new Game(uuid);
         game.dimension = config.dimension;
         game.handicaps = config.handicaps;
         game.grid = GoService.createGrid(game.dimension);
@@ -309,62 +311,65 @@ export class GoService {
         game.lines = GoService.getLines(game.dimension);
         game.stars = GoService.getStars(game.dimension);
         this.updateGame(game);
-        this.gameService.newGame(game);
         return game;
     }
 
     /** Helper to add player to a game.
      * @param game
-     * @param name
+     * @param player
      */
-    public joinGame(game: Game, name: string): void {
-        if (!game.players.find((player) => player.name === name)) {
-            game.players.push({'name': name, 'ready': false, 'socket': null});
-            this.gameService.joinGame(game, name);
+    public joinGame(game: Game, player: Player): void {
+        if (!game.players.find((p) => p.self.uuid === player.uuid)) {
+            game.players.push({self: player, ready: false});
+            this.gameService.joinGame(game, player);
         }
     }
 
     /** Helper to remove player to a game.
      * @param game
-     * @param name
+     * @param playerUuid
      */
-    public leaveGame(game: Game, name: string): void {
-        const playerIndex = game.players.findIndex((player) => player.name === name);
+    public leaveGame(game: Game, playerUuid: string): void {
+        const playerIndex = game.players.findIndex((p) => p.self.uuid === playerUuid);
         if (-1 !== playerIndex) {
-            let opponent = game.players.find((player) => player.name !== name);
+            let opponent = game.players.find((p) => p.self.uuid !== playerUuid);
             if (typeof opponent !== "undefined") {
                 opponent.ready = false;
             }
             game.players.splice(playerIndex, 1);
-            this.gameService.leaveGame(game, name);
+            this.gameService.leaveGame(game, playerUuid);
         }
     }
 
     /**
      * Helper to set player ready.
      * @param game
-     * @param name
+     * @param playerUuid
      */
-    public playerReady(game: Game, name: string): void {
-        let player = game.players.find((player) => player.name === name);
-        if (player && !player.ready) {
-            player.ready = true;
-            this.gameService.playerReady(game, player.name);
+    public playerReady(game: Game, playerUuid: string): void {
+        let p = game.players.find((p) => p.self.uuid === playerUuid);
+        if (p !== undefined) {
+            if(!p.ready){
+                p.ready = true;
+                if(playerUuid === this.playerService.player.uuid) {
+                    this.gameService.playerReady(game, playerUuid);
+                }
+            }
         }
     }
 
     /**
      * Helper to start game
      */
-    public gameStart(game: Game, name: string): void {
+    public gameStart(game: Game, playerUuid: string): void {
         game.active = true;
         game.turn = 1;
-        let player = game.players.find((player) => player.name === name);
+        let player = game.players.find((p) => p.self.uuid === playerUuid);
         if (player && player.ready) {
-            game.black = player.name;
-            let opponent = game.players.find((player) => player.name !== name);
+            game.black = player.self.uuid;
+            let opponent = game.players.find((player) => player.self.uuid !== playerUuid);
             if (typeof opponent !== "undefined") {
-                game.white = opponent.name;
+                game.white = opponent.self.uuid;
             }
         }
     }
@@ -398,15 +403,5 @@ export class GoService {
             game.history.push(movement);
             this.gameService.move(game, x, y);
         }
-    }
-
-    /**
-     * Helper to get uuid for new game.
-     */
-    private uuid(): string {
-        // @ts-ignore
-        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-        )
     }
 }

@@ -6,14 +6,17 @@
             <button (click)="newGame()" mdc-button [unelevated]="true" class="big-round-corner-button" i18n-title="@@ng6GoGamesNewGameButtonTitle" title="New game" i18n="@@ng6GoGamesNewGameButton">New game</button>
         </span>
     </mat-card-title>
-    <mat-card-content>
-        <mat-list>
+    <mat-card-content fxLayoutAlign="center center">
+        <div *ngIf="loading" fxLayoutAlign="center center">
+            <mat-progress-spinner color="primary" [diameter]="70" mode="indeterminate"></mat-progress-spinner>
+        </div>
+        <mat-list *ngIf="!loading && games.length > 0">
             <mat-list-item class="mat-list-item-game" *ngFor="let game of gamesList|async">
-                <span fxFlex="50" class="mat-list-item-name">game {{game.id}}</span>
+                <span fxFlex="50" class="mat-list-item-name">game {{game.uuid}}</span>
                 <span fxFlex="25" class="mat-list-item-details"></span>
                 <!--<span fxFlex="25" class="mat-list-item-details">dimension : {{game.dimension}}</span>-->
                 <span fxFlex="25" class="mat-list-item-actions">
-                    <button (click)="joinGame(game.id)" mdc-button [unelevated]="true" class="big-round-corner-button" i18n="@@ng6GoGamesJoinButton">Join</button>
+                    <button (click)="joinGame(game.uuid)" mdc-button [unelevated]="true" class="big-round-corner-button" i18n="@@ng6GoGamesJoinButton">Join</button>
                 </span>
             </mat-list-item>
         </mat-list>

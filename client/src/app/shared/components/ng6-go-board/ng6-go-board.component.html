@@ -55,9 +55,9 @@
                     <!--</text>-->
                 </svg>
                     <svg xmlns="http://www.w3.org/2000/svg" *ngIf="0===current">
-                    <circle *ngIf="game.turn === 1 && game.black === username" class="empty-black" cx="250" cy="250" r="245" fill-opacity="0"
+                    <circle *ngIf="game.turn === 1 && game.black === player.uuid" class="empty-black" cx="250" cy="250" r="245" fill-opacity="0"
                             (click)="onClick(i, j)"/>
-                    <circle *ngIf="game.turn === -1 && game.white === username" class="empty-white" cx="250" cy="250" r="245" fill-opacity="0"
+                    <circle *ngIf="game.turn === -1 && game.white === player.uuid" class="empty-white" cx="250" cy="250" r="245" fill-opacity="0"
                             (click)="onClick(i, j)"/>
                 </svg>
             </svg>

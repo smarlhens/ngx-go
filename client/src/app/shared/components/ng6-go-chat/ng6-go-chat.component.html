@@ -1,18 +1,18 @@
 <div class="ng6-go-chat-panel">
     <div class="ng6-go-chat-panel-title" i18n="@@ng6GoChatPanelTitle">Chat</div>
-    <div class="ng6-go-chat-panel-spinner" *ngIf="loading" fxLayoutAlign="center center">
+    <div *ngIf="loading" fxLayoutAlign="center center">
         <mat-progress-spinner color="primary" [diameter]="70" mode="indeterminate"></mat-progress-spinner>
     </div>
-    <div #ng6GoChatPanelMessages class="ng6-go-chat-panel-messages" [scrollTop]="ng6GoChatPanelMessages.scrollHeight" *ngIf="!loading">
+    <div #ng6GoChatPanelMessages class="ng6-go-chat-panel-messages" [scrollTop]="ng6GoChatPanelMessages.scrollHeight" *ngIf="!loading && messages.length > 0">
         <div class="ng6-go-chip-message" *ngFor="let message of messages; let i = index">
             <div *ngIf="displayDate(messages[i-1], message)" class="ng6-go-chip-message-date">
                 {{message.date|date:('en' === locale ? 'MMMM dd, yyyy, h:mm a' : 'dd MMMM yyyy, HH:mm')}}
             </div>
-            <div *ngIf="message.sender !== sender && (displayDate(messages[i-1], message) || (undefined === messages[i-1] || (undefined !== messages[i-1] && message.sender !== messages[i-1].sender)))" class="ng6-go-chip-message-sender">
-                {{message.sender}}
+            <div *ngIf="message.sender.uuid !== sender.uuid && (displayDate(messages[i-1], message) || (undefined === messages[i-1] || (undefined !== messages[i-1] && message.sender.uuid !== messages[i-1].sender.uuid)))" class="ng6-go-chip-message-sender">
+                {{message.sender.name}}
             </div>
-            <div [ngClass]="message.sender === sender ? 'ng6-go-chip-message-me' : 'ng6-go-chip-message-other'">
-                <mdc-chip [primary]="message.sender === sender">
+            <div [ngClass]="message.sender.uuid === sender.uuid ? 'ng6-go-chip-message-me' : 'ng6-go-chip-message-other'">
+                <mdc-chip [primary]="message.sender.uuid === sender.uuid">
                     <mdc-chip-text>{{message.content}}</mdc-chip-text>
                 </mdc-chip>
             </div>

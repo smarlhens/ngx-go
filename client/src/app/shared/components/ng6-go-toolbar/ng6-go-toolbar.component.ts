@@ -1,12 +1,13 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
-import {UserService} from "../../services/user.service";
+import {PlayerService} from "../../services/player.service";
 import {debounceTime, distinctUntilChanged} from "rxjs/operators";
 import {Location} from '@angular/common';
-import {Router} from "@angular/router";
 import {GoService} from "../../services/go.service";
 import {Game} from "../../models/game";
 import {environment} from "../../../../environments/environment";
+import {Router} from "@angular/router";
+import {Player} from "../../models/player";
 
 @Component({
     selector: 'ng6-go-toolbar',
@@ -16,9 +17,10 @@ export class Ng6GoToolbarComponent implements OnInit {
 
     public usernameControl: FormControl;
     public game: Game;
+    private player: Player;
 
     constructor(
-        private userService: UserService,
+        private playerService: PlayerService,
         private zone: NgZone,
         private location: Location,
         public router: Router,
@@ -31,21 +33,22 @@ export class Ng6GoToolbarComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.goService.game.subscribe((game) => this.game = game);
-        this.userService.username.subscribe((username) => {
-            this.usernameControl.setValue(username);
-            this.usernameControl.disable();
+        this.usernameControl.disable();
+        this.goService.game$.subscribe((game) => this.game = game);
+        this.playerService.player$.subscribe((player: Player) => {
+            this.player = player;
+            this.usernameControl.setValue(player.name);
         });
         this.usernameControl.valueChanges
             .pipe(debounceTime(250))
             .pipe(distinctUntilChanged())
-            .subscribe(username => this.userService.updateUsername(username))
+            .subscribe(username => this.playerService.updateName(username))
         ;
     }
 
     public goBack(): void {
         this.location.back();
-        this.goService.leaveGame(this.game, this.usernameControl.value);
+        this.goService.leaveGame(this.game, this.player.uuid);
     }
 
     public disableLocale(locale: string): boolean {

@@ -12,14 +12,14 @@
         <mat-list class="mat-list-players">
             <mat-list-item *ngFor="let player of game.players">
                 <span class="mat-list-players-item-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" *ngIf="player.name === game.black">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" *ngIf="player.self.uuid === game.black">
                         <circle class="black" cx="10" cy="10" r="8" fill="url(#black)"/>
                     </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" *ngIf="player.name === game.white">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" *ngIf="player.self.uuid === game.white">
                         <circle class="white" cx="10" cy="10" r="8" fill="url(#white)"/>
                     </svg>
                 </span>
-                <span class="mat-list-players-item-name">{{player.name}}</span>
+                <span class="mat-list-players-item-name">{{player.self.name}}</span>
                 <span class="mat-list-players-item-status" *ngIf="player.ready"
                       i18n="@@ng6GoOverviewPlayerStatus">Ready</span>
             </mat-list-item>

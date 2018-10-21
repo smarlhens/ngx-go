@@ -44,12 +44,13 @@ export class NamespaceService {
     private setNamespace(ns = this.defaultNS): void {
         if (null !== ns && ns !== this.currentNS) {
             if (typeof this.socket !== "undefined" && null !== this.socket && this.socket.connected) {
-                this.socket.disconnect();
+                this.socket.disconnect(true);
             }
             this.socket = io.connect(environment.server + ns, {
-                query: 'ns=' + ns,
-                forceNew: true,
-                resource: "socket.io"
+                query: {
+                    ns: ns
+                },
+                forceNew: true
             });
             this.currentNS = ns;
         }
