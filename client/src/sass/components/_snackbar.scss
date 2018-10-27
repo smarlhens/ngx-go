@@ -1,0 +1,30 @@
+.mat-snack-bar-handset {
+    .mat-snack-bar-container {
+        &.mat-snack-bar-center{
+            margin-bottom: 0 !important;
+        }
+        border-radius: 0 !important;
+    }
+}
+
+.mat-snack-bar-container {
+    &.mat-snack-bar-center{
+        margin-bottom: 1rem !important;
+    }
+
+    &.error, &.success{
+        color: white;
+        border-radius: 25px;
+        .mat-button{
+            color: white;
+        }
+    }
+
+    &.error {
+        background-color: map_get($mat-red, 900);
+    }
+
+    &.success {
+        background-color: map_get($mat-green, 900);
+    }
+}

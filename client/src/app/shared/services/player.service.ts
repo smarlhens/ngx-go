@@ -59,7 +59,19 @@ export class PlayerService {
         }
     }
 
-    private onNewPlayer() {
+    public newName(playerUuid: string, name: string): void {
+        this.nsService.socket.emit('new_name', playerUuid, name);
+    }
+
+    public onNewName(): Observable<string> {
+        return Observable.create((observer) => {
+            this.nsService.socket.on('new_name', (name: string) => {
+                observer.next(name);
+            });
+        });
+    }
+
+    private onNewPlayer(): Observable<Player> {
         return Observable.create((observer) => {
             this.nsService.socket.on('new_player', (player: Player) => {
                 observer.next(player);
@@ -67,7 +79,7 @@ export class PlayerService {
         });
     }
 
-    private onCheckPlayer() {
+    private onCheckPlayer(): Observable<boolean> {
         return Observable.create((observer) => {
             this.nsService.socket.on('check_player', (check: boolean) => {
                 observer.next(check);

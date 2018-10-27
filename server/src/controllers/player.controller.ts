@@ -27,13 +27,31 @@ export class PlayerController {
     }
 
     public check(nsp: any, socket: any, player: Player): void {
-        if(this.players.some((p) => p.uuid === player.uuid && p.name === player.name)){
+        if (this.players.some((p) => p.uuid === player.uuid && p.name === player.name)) {
             nsp.to(socket.id).emit('check_player', true);
-        }else if(!this.players.some((p) => p.uuid === player.uuid || p.name === player.name)){
+        } else if (!this.players.some((p) => p.uuid === player.uuid || p.name === player.name)) {
             this.players.push(player);
             nsp.to(socket.id).emit('check_player', true);
-        }else{
+        } else {
             nsp.to(socket.id).emit('check_player', false);
+        }
+    }
+
+    /**
+     * @param nsp
+     * @param socket
+     * @param playerUuid
+     * @param name
+     */
+    public newName(nsp: any, socket: any, playerUuid: string, name: string) {
+        let player = this.getByUuid(playerUuid);
+        if (typeof player !== "undefined" && null !== player) {
+            if (this.players.find((player: Player) => player.name === name) === undefined) {
+                player.name = name;
+                nsp.to(socket.id).emit('new_name', name);
+            } else {
+                nsp.to(socket.id).emit('new_name', player.name);
+            }
         }
     }
 

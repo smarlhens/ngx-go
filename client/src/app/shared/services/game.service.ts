@@ -12,7 +12,7 @@ export class GameService {
     constructor(private nsService: NamespaceService) {
     }
 
-    public newGame() {
+    public newGame(): Observable<string> {
         this.nsService.socket.emit('new_game');
         return Observable.create((observer) => {
             this.nsService.socket.on('new_uuid', (uuid: string) => {
@@ -21,7 +21,7 @@ export class GameService {
         });
     }
 
-    public onNewGame() {
+    public onNewGame(): Observable<string> {
         return Observable.create((observer) => {
             this.nsService.socket.on('new_game', (uuid: string) => {
                 observer.next(uuid);
@@ -29,7 +29,7 @@ export class GameService {
         });
     }
 
-    public getAll() {
+    public getAll(): Observable<Game[]> {
         this.nsService.socket.emit('get_all_games');
         return Observable.create((observer) => {
             this.nsService.socket.on('get_all_games', (games: Game[]) => {
@@ -46,10 +46,18 @@ export class GameService {
         this.nsService.socket.emit('join_game', game.uuid, player.uuid);
     }
 
-    public onPlayerJoin() {
+    public onPlayerJoin(): Observable<Player> {
         return Observable.create((observer) => {
             this.nsService.socket.on('join_game', (player: Player) => {
                 observer.next(player);
+            });
+        });
+    }
+
+    public onGameResume(): Observable<Game> {
+        return Observable.create((observer) => {
+            this.nsService.socket.on('game_resume', (game: Game) => {
+                observer.next(game);
             });
         });
     }
@@ -62,7 +70,7 @@ export class GameService {
         this.nsService.socket.emit('leave_game', game.uuid, playerUuid);
     }
 
-    public onPlayerLeave() {
+    public onPlayerLeave(): Observable<string> {
         return Observable.create((observer) => {
             this.nsService.socket.on('leave_game', (playerUuid: string) => {
                 observer.next(playerUuid);
@@ -78,7 +86,7 @@ export class GameService {
         this.nsService.socket.emit('player_ready', game.uuid, playerUuid);
     }
 
-    public onPlayerReady() {
+    public onPlayerReady(): Observable<string> {
         return Observable.create((observer) => {
             this.nsService.socket.on('player_ready', (playerUuid: string) => {
                 observer.next(playerUuid);
@@ -86,7 +94,7 @@ export class GameService {
         });
     }
 
-    public onDeleteGame() {
+    public onDeleteGame(): Observable<string> {
         return Observable.create((observer) => {
             this.nsService.socket.on('delete_game', (uuid: string) => {
                 observer.next(uuid);
@@ -94,10 +102,10 @@ export class GameService {
         });
     }
 
-    public onGameStart() {
+    public onGameStart(): Observable<string> {
         return Observable.create((observer) => {
-            this.nsService.socket.on('game_start', (game: Game) => {
-                observer.next(game);
+            this.nsService.socket.on('game_start', (playerUuid: string) => {
+                observer.next(playerUuid);
             });
         });
     }
@@ -111,7 +119,7 @@ export class GameService {
         this.nsService.socket.emit('new_move', game.uuid, x, y);
     }
 
-    public onNewMove() {
+    public onNewMove(): Observable<{ x: number, y: number }> {
         return Observable.create((observer) => {
             this.nsService.socket.on('new_move', (game: Game, x, y) => {
                 observer.next({x, y});
@@ -119,7 +127,7 @@ export class GameService {
         });
     }
 
-    public onGameReady() {
+    public onGameReady(): Observable<string> {
         return Observable.create((observer) => {
             this.nsService.socket.on('game_ready', (uuid: string) => {
                 observer.next(uuid);
@@ -127,7 +135,7 @@ export class GameService {
         });
     }
 
-    public onGamePending() {
+    public onGamePending(): Observable<string> {
         return Observable.create((observer) => {
             this.nsService.socket.on('game_pending', (uuid: string) => {
                 observer.next(uuid);

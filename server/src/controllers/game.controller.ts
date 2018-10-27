@@ -1,12 +1,13 @@
 import {Game} from "../models/game";
 import {PlayerController} from "./player.controller";
+import {GoService} from "../services/go.service";
 import uuidGenerator = require('uuid');
 
 export class GameController {
 
     private games: Game[];
 
-    constructor(private playerController: PlayerController) {
+    constructor(private playerController: PlayerController, private goService: GoService) {
         this.games = [];
     }
 
@@ -17,7 +18,7 @@ export class GameController {
     public new(nsp: any, socket: any): void {
         const uuid = uuidGenerator.v4();
         if (!this.getByUuid(uuid)) {
-            this.games.push(new Game(uuid));
+            this.games.push(this.goService.createGame(uuid));
             socket.join('game');
             // send new game to all clients except sender
             nsp.to(socket.id).emit('new_uuid', uuid);
@@ -64,6 +65,15 @@ export class GameController {
     }
 
     /**
+     * @param gameUuid
+     */
+    public gameExist(gameUuid: string): boolean {
+        const gameIndex = this.getIndexByUuid(gameUuid);
+        const game = this.games[gameIndex];
+        return -1 !== gameIndex && typeof game !== "undefined" && null !== game;
+    }
+
+    /**
      * @param io
      * @param nsp
      * @param socket
@@ -74,18 +84,25 @@ export class GameController {
         console.log('gameController:join_game');
         const game = this.getByUuid(gameUuid);
         let player = this.playerController.getByUuid(playerUuid);
-        if (typeof game !== "undefined" && null !== game && typeof player !== "undefined" && null !== player && game.players.length < 2 && !game.active) {
+        if (this.gameExist(gameUuid) && typeof player !== "undefined" && null !== player && ((game.players.length < 2 && !game.active) || (game.active && game.players.find((player) => player.self.uuid === playerUuid)))) {
             socket.join('game');
             player.socket = socket.id;
-            game.players.push({self: player, ready: false});
 
-            // get the opponent if exist
-            const opponent = game.players.find((player) => player.self.uuid !== playerUuid);
-            if (typeof opponent !== "undefined") {
-                nsp.to(player.socket).emit('join_game', opponent.self);
-                nsp.to(opponent.self.socket).emit('join_game', player);
-                console.log('gameController:game_ready');
-                io.to('game').emit('game_ready', gameUuid);
+            if (game.active && game.players.find((player) => player.self.uuid === playerUuid)) {
+                nsp.to(player.socket).emit('game_resume', game);
+            }
+
+            if (game.players.length < 2 && !game.active) {
+                game.players.push({self: player, ready: false});
+
+                // get the opponent if exist
+                const opponent = game.players.find((player) => player.self.uuid !== playerUuid);
+                if (typeof opponent !== "undefined") {
+                    nsp.to(player.socket).emit('join_game', opponent.self);
+                    nsp.to(opponent.self.socket).emit('join_game', player);
+                    console.log('gameController:game_ready');
+                    io.to('game').emit('game_ready', gameUuid);
+                }
             }
         }
     }
@@ -101,7 +118,7 @@ export class GameController {
         console.log('gameController:leave_game');
         const gameIndex = this.getIndexByUuid(gameUuid);
         const game = this.games[gameIndex];
-        if (-1 !== gameIndex && typeof game !== "undefined" && null !== game && !game.active) {
+        if (this.gameExist(gameUuid) && !game.active) {
             const playerIndex = game.players.findIndex((player) => player.self.uuid === playerUuid);
             if (-1 !== playerIndex) {
                 socket.join('game');
@@ -132,5 +149,72 @@ export class GameController {
         console.log('gameController:delete_game');
         io.to('game').emit('delete_game', uuid);
         this.games.splice(this.getIndexByUuid(uuid), 1);
+    }
+
+    /**
+     * @param nsp
+     * @param socket
+     * @param gameUuid
+     * @param playerUuid
+     */
+    public playerReady(nsp: any, socket: any, gameUuid: string, playerUuid: string) {
+        if (this.gameExist(gameUuid)) {
+            const game = this.getByUuid(gameUuid);
+            const player = game.players.find((player) => player.self.uuid === playerUuid);
+            if (typeof player !== "undefined") {
+                socket.join('game');
+                player.ready = true;
+                console.log('player_ready');
+
+                // get the opponent if exist
+                const opponent = game.players.find((player) => player.self.uuid !== playerUuid);
+                if (typeof opponent !== "undefined") {
+                    if (opponent.ready) {
+                        nsp.to(socket.id).emit('player_ready', opponent.self.uuid);
+                    }
+                    nsp.to(opponent.self.socket).emit('player_ready', playerUuid);
+                }
+
+                if (game.players.every((player) => player.ready === true)) {
+                    this.startGame(nsp, game);
+                }
+            }
+        }
+    }
+
+    public newMove(nsp: any, socket: any, gameUuid: string, x: number, y: number) {
+        if (this.gameExist(gameUuid)) {
+            const game = this.getByUuid(gameUuid);
+
+            if (GoService.isPlayable(game, x, y, game.turn)) {
+                socket.join('game');
+                this.goService.move(game, x, y);
+
+                // get the opponent
+                const opponent = game.players.find((player) => player.self.socket !== socket.id);
+                if (typeof opponent !== "undefined") {
+                    // send new move to the opponent
+                    console.log('new_move');
+                    nsp.to(opponent.self.socket).emit('new_move', gameUuid, x, y);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param nsp
+     * @param game
+     */
+    private startGame(nsp: any, game: Game) {
+        game.active = true;
+        game.turn = 1;
+        console.log('game_start');
+        const startingPlayer = game.players[Math.round(Math.random())];
+        game.black = startingPlayer.self.uuid;
+        const opponent = game.players.find((player) => player.self.uuid !== startingPlayer.self.uuid);
+        if (typeof opponent !== "undefined") {
+            game.white = opponent.self.uuid;
+        }
+        nsp.to('game').emit('game_start', startingPlayer.self.uuid);
     }
 }

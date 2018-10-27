@@ -14,10 +14,5 @@ TODO / IDEAS :
 * games : List only the games not started/empty
 * overview : display the number of points (score)
 * overview : history of movements
-* server : if a player joins a game that does not exist, create the game and send the information back to the client
-* server : Check movements from clients on the Go board
-* server : Implement go service methods
 * server : Auto leave for AFK socket
-* server : \[bug] when changing namespace first message not displayed on every chat
 * server : get event on refresh page / leave page to disconnect socket
-* user : Custom username

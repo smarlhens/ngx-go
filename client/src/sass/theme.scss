@@ -76,7 +76,7 @@ $ng6-go-theme: mat-light-theme($ng6-go-primary, $ng6-go-accent, $ng6-go-warn);
 
 @include angular-material-theme($ng6-go-theme);
 
-@import "shared/variables";
+@import "components/variables";
 
 $mdc-theme-primary: map_get($ng6-go-primary-color, 500);
 $mdc-theme-secondary: map_get($ng6-go-accent-color, 500);
@@ -84,13 +84,15 @@ $mdc-theme-secondary: map_get($ng6-go-accent-color, 500);
 @import "~@angular-mdc/theme/material";
 
 @import "app";
-@import "shared/components/ng6-go-toolbar.component";
-@import "components/home.component";
-@import "components/game.component";
-@import "shared/components/ng6-go-chat.component";
-@import "shared/components/ng6-go-games.component";
-@import "shared/components/ng6-go-nav.component";
-@import "shared/components/ng6-go-board.component";
-@import "shared/components/ng6-go-overview.component";
+@import "app/components/home.component";
+@import "app/components/game.component";
+@import "app/shared/components/ng6-go-toolbar.component";
+@import "app/shared/components/ng6-go-chat.component";
+@import "app/shared/components/ng6-go-games.component";
+@import "app/shared/components/ng6-go-nav.component";
+@import "app/shared/components/ng6-go-board.component";
+@import "app/shared/components/ng6-go-overview.component";
+
+@import "components/snackbar";
 
 @import "~sass-spacing/index.css";

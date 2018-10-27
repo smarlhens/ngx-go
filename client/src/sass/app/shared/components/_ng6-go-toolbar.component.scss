@@ -3,17 +3,23 @@ ng6-go-toolbar {
         position: sticky;
         top: 0;
 
+        span > a{
+            text-decoration: inherit;
+            color: inherit;
+        }
+
         .ng6-go-username.mdc-text-field--fullwidth {
             width: inherit !important;
         }
 
         .ng6-go-username.mdc-text-field {
-            padding-left: 1rem;
+            padding: 0 !important;
             border-radius: 30px;
             border: 0;
 
             .mdc-text-field__input {
                 border: 0 !important;
+                padding: 0 1rem;
                 text-align: end !important;
             }
 
@@ -28,7 +34,7 @@ ng6-go-toolbar {
         }
 
         .ng6-go-username.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input::placeholder {
-            color: white;
+            color: white !important;
         }
 
         .ng6-go-username.mdc-text-field--disabled,

@@ -4,6 +4,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {PlayerService} from "../../shared/services/player.service";
 import {Title} from "@angular/platform-browser";
 import {Player} from "../../shared/models/player";
+import {GameService} from "../../shared/services/game.service";
+import {take} from "rxjs/operators";
+import {Game} from "../../shared/models/game";
 
 @Component({
     selector: 'app-game',
@@ -18,6 +21,7 @@ export class GameComponent implements OnInit {
         private router: Router,
         private goService: GoService,
         private playerService: PlayerService,
+        private gameService: GameService,
         private titleService: Title
     ) {
     }
@@ -31,5 +35,10 @@ export class GameComponent implements OnInit {
         this.titleService.setTitle('Game ' + uuid);
         const game = this.goService.createGame(uuid);
         this.goService.joinGame(game, this.player);
+        this.gameService.onGameResume()
+            .pipe(
+                take(1)
+            )
+            .subscribe((game: Game) => this.goService.updateGame(game));
     }
 }
