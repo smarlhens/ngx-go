@@ -1,6 +1,6 @@
 export class Movement {
-    add: any = [];
-    remove: any = [];
+    add: { x: number, y: number, c: number, s: any }[] = [];
+    remove: { x: number, y: number, c: number, s: any }[] = [];
     turn: number | null;
 
     constructor(add = [], remove = [], turn = null) {

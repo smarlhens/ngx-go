@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Game} from "../models/game";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {GameService} from "./game.service";
 import {Movement} from "../models/movement";
 import {Player} from "../models/player";
@@ -264,6 +264,10 @@ export class GoService {
         if (game.grid[x][y] != 0) {
             return false;
         }
+        if (game.history !== undefined && game.history.length > 1
+            && game.history[game.history.length - 1].remove.find((move: any) => move.x === x && move.y === y && move.c === c)) {
+            return false;
+        }
         game.grid[x][y] = c;
         if (GoService.countLiberties(game, x, y) > 0) {
             game.grid[x][y] = 0;
@@ -349,9 +353,9 @@ export class GoService {
     public playerReady(game: Game, playerUuid: string): void {
         let p = game.players.find((p) => p.self.uuid === playerUuid);
         if (p !== undefined) {
-            if(!p.ready){
+            if (!p.ready) {
                 p.ready = true;
-                if(playerUuid === this.playerService.player.uuid) {
+                if (playerUuid === this.playerService.player.uuid) {
                     this.gameService.playerReady(game, playerUuid);
                 }
             }
@@ -379,7 +383,7 @@ export class GoService {
      * @param x: x coordinate
      * @param y: y coordinate
      */
-    public move(game: Game, x: number, y: number): void {
+    public move(game: Game, x: number, y: number): Observable<boolean> {
         if (GoService.isPlayable(game, x, y, game.turn)) {
             let movement = new Movement([{x: x, y: y, c: game.turn, s: game.steps + 1}], [], null);
             game.sequence[x][y] = game.steps + 1;
@@ -402,6 +406,8 @@ export class GoService {
             movement.turn = game.turn;
             game.history.push(movement);
             this.gameService.move(game, x, y);
+            return Observable.create((observer) => observer.next(true));
         }
+        return Observable.create((observer) => observer.next(false));
     }
 }

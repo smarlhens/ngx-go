@@ -68,9 +68,16 @@
                 <source>Your opponent is not ready</source>
                 <target>Your opponent is not ready</target>
                 <context-group purpose="location">
-                    <context context-type="sourcefile">app/shared/components/ng6-go-board/ng6-go-board.component.html
-                    </context>
+                    <context context-type="sourcefile">app/shared/components/ng6-go-board/ng6-go-board.component.html</context>
                     <context context-type="linenumber">94</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoBoardActionsSkipTurn" datatype="html">
+                <source>Skip turn</source>
+                <target>Skip turn</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-board/ng6-go-board.component.html</context>
+                    <context context-type="linenumber">98</context>
                 </context-group>
             </trans-unit>
             <trans-unit id="ng6GoToolbarBackButton" datatype="html">
@@ -89,10 +96,12 @@
                 <source>Go game</source>
                 <target>Go game</target>
                 <context-group purpose="location">
-                    <context context-type="sourcefile">
-                        app/shared/components/ng6-go-toolbar/ng6-go-toolbar.component.html
-                    </context>
-                    <context context-type="linenumber">8</context>
+                    <context context-type="sourcefile">app/shared/components/ng6-go-toolbar/ng6-go-toolbar.component.html</context>
+                    <context context-type="linenumber">10</context>
+                </context-group>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-toolbar/ng6-go-toolbar.component.html</context>
+                    <context context-type="linenumber">10</context>
                 </context-group>
             </trans-unit>
             <trans-unit id="ng6GoToolbarUsernameField" datatype="html">

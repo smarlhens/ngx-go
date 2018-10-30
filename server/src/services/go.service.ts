@@ -253,6 +253,10 @@ export class GoService {
         if (game.grid[x][y] != 0) {
             return false;
         }
+        if (game.history !== undefined && game.history.length > 1
+            && game.history[game.history.length - 1].remove.find((move: any) => move.x === x && move.y === y && move.c === c)) {
+            return false;
+        }
         game.grid[x][y] = c;
         if (GoService.countLiberties(game, x, y) > 0) {
             game.grid[x][y] = 0;

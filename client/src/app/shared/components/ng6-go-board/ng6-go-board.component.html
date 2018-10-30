@@ -93,4 +93,8 @@
     <button *ngIf="game.players.length === 2 && amIReady() && !isOpponentReady()" mdc-fab extended disabled>
         <mdc-fab-label i18n="@@ng6GoBoardActionsOpponentNotReady">Your opponent is not ready</mdc-fab-label>
     </button>
+
+    <button *ngIf="game.active" mdc-fab extended [disabled]="!((game.turn === -1 && game.white === player.uuid) || (game.turn === 1 && game.black === player.uuid))" (click)="skip()">
+        <mdc-fab-label i18n="@@ng6GoBoardActionsSkipTurn">Skip turn</mdc-fab-label>
+    </button>
 </div>

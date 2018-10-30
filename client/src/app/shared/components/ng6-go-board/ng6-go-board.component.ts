@@ -4,9 +4,9 @@ import {Game} from "../../models/game";
 import {PlayerService} from "../../services/player.service";
 import {GameService} from "../../services/game.service";
 import {distinctUntilChanged} from "rxjs/operators";
-import {MatSnackBar} from "@angular/material";
 import {TranslateService} from "@ngx-translate/core";
 import {Player} from "../../models/player";
+import {SnackService} from "../../services/snack.service";
 
 @Component({
     selector: 'ng6-go-board',
@@ -21,7 +21,7 @@ export class Ng6GoBoardComponent implements OnInit {
         private goService: GoService,
         private playerService: PlayerService,
         private gameService: GameService,
-        public snackBar: MatSnackBar,
+        public snackService: SnackService,
         private translate: TranslateService) {
     }
 
@@ -55,8 +55,11 @@ export class Ng6GoBoardComponent implements OnInit {
         ;
         this.gameService.onNewMove()
             .subscribe((pos: { x: number, y: number }) => {
-                this.goService.move(this.game, pos.x, pos.y);
-                this.turnAlert();
+                this.goService.move(this.game, pos.x, pos.y).subscribe((success) => {
+                    if (success) {
+                        this.turnAlert();
+                    }
+                });
             })
         ;
     }
@@ -67,8 +70,15 @@ export class Ng6GoBoardComponent implements OnInit {
      * @param y: y coordinate
      */
     public onClick(x: number, y: number): void {
-        this.goService.move(this.game, x, y);
-        this.turnAlert();
+        this.goService.move(this.game, x, y).subscribe((success) => {
+            if (success) {
+                this.turnAlert();
+            } else {
+                this.translate.get('ng6-go-board.snackbar.move.error').subscribe((message: string) => {
+                    this.snackService.error(message);
+                });
+            }
+        });
     }
 
     /**
@@ -90,6 +100,10 @@ export class Ng6GoBoardComponent implements OnInit {
         return this.game.players.every((player) => player.ready === true);
     }
 
+    public skip(): void {
+
+    }
+
     private turnAlert(): void {
         let snackBarMessage = null;
         if ((1 === this.game.turn && this.player.uuid === this.game.black) || (-1 === this.game.turn && this.player.uuid === this.game.white)) {
@@ -98,7 +112,7 @@ export class Ng6GoBoardComponent implements OnInit {
             snackBarMessage = 'ng6-go-board.snackbar.opponent';
         }
         this.translate.get(snackBarMessage).subscribe((message: string) => {
-            this.snackBar.open(message, 'OK', {duration: 3000});
+            this.snackService.default(message);
         });
     }
 

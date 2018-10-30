@@ -8,7 +8,7 @@ import {Game} from "../../models/game";
 import {environment} from "../../../../environments/environment";
 import {Router} from "@angular/router";
 import {Player} from "../../models/player";
-import {MatSnackBar} from "@angular/material";
+import {SnackService} from "../../services/snack.service";
 
 @Component({
     selector: 'ng6-go-toolbar',
@@ -25,7 +25,7 @@ export class Ng6GoToolbarComponent implements OnInit {
         private zone: NgZone,
         private location: Location,
         public router: Router,
-        public snackBar: MatSnackBar,
+        public snackService: SnackService,
         private goService: GoService
     ) {
         this.usernameControl = new FormControl('', [
@@ -46,14 +46,8 @@ export class Ng6GoToolbarComponent implements OnInit {
                 debounceTime(250),
                 filter((name: string) => name !== this.player.name),
                 filter((name: string) => {
-                    if(name.length < 4){
-                        this.snackBar.open('Le pseudo doit contenir au moins 4 charactères.',
-                            'OK',
-                            {
-                                duration: 3000,
-                                panelClass: ['error']
-                            }
-                        );
+                    if (name.length < 4) {
+                        this.snackService.error('Le pseudo doit contenir au moins 4 charactères.');
                     }
                     return name.length >= 4;
                 }),
@@ -64,22 +58,10 @@ export class Ng6GoToolbarComponent implements OnInit {
         this.playerService.onNewName().subscribe(
             (name: string) => {
                 if (name === this.player.name) {
-                    this.snackBar.open('Le pseudo choisit n\'est pas disponible.',
-                        'OK',
-                        {
-                            duration: 3000,
-                            panelClass: ['error']
-                        }
-                    );
+                    this.snackService.error('Le pseudo choisit n\'est pas disponible.');
                     this.usernameControl.setValue(this.player.name);
                 } else {
-                    this.snackBar.open('Le pseudo a été mis à jour avec succès.',
-                        'OK',
-                        {
-                            duration: 3000,
-                            panelClass: ['success']
-                        }
-                    );
+                    this.snackService.success('Le pseudo a été mis à jour avec succès.');
                     this.playerService.updateName(name);
                     this.usernameControl.setValue(name);
                 }
