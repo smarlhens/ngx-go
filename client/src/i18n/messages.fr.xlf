@@ -64,7 +64,7 @@
             </trans-unit>
             <trans-unit id="ng6GoEndGameDialogButton" datatype="html">
                 <source>Go to the homepage</source>
-                <source>Retouner à la page d'accueil</source>
+                <target>Retouner à la page d'accueil</target>
                 <context-group purpose="location">
                     <context context-type="sourcefile">app/shared/components/ng6-go-end-game-dialog/ng6-go-end-game-dialog.component.html</context>
                     <context context-type="linenumber">6</context>
