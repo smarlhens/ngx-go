@@ -405,7 +405,24 @@ export class GoService {
             game.turn = game.steps >= game.handicaps ? -game.turn : game.turn;
             movement.turn = game.turn;
             game.history.push(movement);
-            this.gameService.move(game, x, y);
+            return Observable.create((observer) => observer.next(true));
+        }
+        return Observable.create((observer) => observer.next(false));
+    }
+
+    /**
+     * Skip turn
+     * @param game
+     * @param playerUuid
+     */
+    public skip(game: Game, playerUuid: string): Observable<boolean> {
+        if (game.players.find((p) => p.self.uuid === playerUuid)
+            && ((game.turn === 1 && playerUuid === game.black) || (game.turn === -1 && playerUuid === game.white))) {
+            let movement = new Movement([], [], null);
+            game.steps += 1;
+            game.turn = game.steps >= game.handicaps ? -game.turn : game.turn;
+            movement.turn = game.turn;
+            game.history.push(movement);
             return Observable.create((observer) => observer.next(true));
         }
         return Observable.create((observer) => observer.next(false));

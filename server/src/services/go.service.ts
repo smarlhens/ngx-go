@@ -1,9 +1,41 @@
 import {Game} from "../models/game";
 import {Movement} from "../models/movement";
+import {Observable} from "rxjs";
 
 export class GoService {
 
     constructor() {
+    }
+
+    /**
+     * Check if a position is playable by a color.
+     * @param game
+     * @param x: x coordinate
+     * @param y: y coordinate
+     * @param c: color
+     */
+    public static isPlayable(game: Game, x: number, y: number, c: number): boolean {
+        if (game.grid[x][y] != 0) {
+            return false;
+        }
+        if (game.history !== undefined && game.history.length > 1
+            && game.history[game.history.length - 1].remove.find((move: any) => move.x === x && move.y === y && move.c === c)) {
+            return false;
+        }
+        game.grid[x][y] = c;
+        if (GoService.countLiberties(game, x, y) > 0) {
+            game.grid[x][y] = 0;
+            return true;
+        }
+        let neighborGroups = GoService.getNeighbors(game, x, y);
+        for (let i = 0; i < neighborGroups.length; i++) {
+            if (GoService.countGroupLiberties(game, neighborGroups[i]) === 0) {
+                game.grid[x][y] = 0;
+                return true;
+            }
+        }
+        game.grid[x][y] = 0;
+        return false;
     }
 
     /**
@@ -243,37 +275,6 @@ export class GoService {
     }
 
     /**
-     * Check if a position is playable by a color.
-     * @param game
-     * @param x: x coordinate
-     * @param y: y coordinate
-     * @param c: color
-     */
-    public static isPlayable(game: Game, x: number, y: number, c: number): boolean {
-        if (game.grid[x][y] != 0) {
-            return false;
-        }
-        if (game.history !== undefined && game.history.length > 1
-            && game.history[game.history.length - 1].remove.find((move: any) => move.x === x && move.y === y && move.c === c)) {
-            return false;
-        }
-        game.grid[x][y] = c;
-        if (GoService.countLiberties(game, x, y) > 0) {
-            game.grid[x][y] = 0;
-            return true;
-        }
-        let neighborGroups = GoService.getNeighbors(game, x, y);
-        for (let i = 0; i < neighborGroups.length; i++) {
-            if (GoService.countGroupLiberties(game, neighborGroups[i]) === 0) {
-                game.grid[x][y] = 0;
-                return true;
-            }
-        }
-        game.grid[x][y] = 0;
-        return false;
-    }
-
-    /**
      * Helper to convert a number to a letter.
      * @param num: a number >= 1 && <= 26
      */
@@ -319,7 +320,7 @@ export class GoService {
      * @param x: x coordinate
      * @param y: y coordinate
      */
-    public move(game: Game, x: number, y: number): void {
+    public move(game: Game, x: number, y: number): Observable<boolean> {
         if (GoService.isPlayable(game, x, y, game.turn)) {
             let movement = new Movement([{x: x, y: y, c: game.turn, s: game.steps + 1}], [], null);
             game.sequence[x][y] = game.steps + 1;
@@ -341,6 +342,26 @@ export class GoService {
             game.turn = game.steps >= game.handicaps ? -game.turn : game.turn;
             movement.turn = game.turn;
             game.history.push(movement);
+            return Observable.create((observer) => observer.next(true));
         }
+        return Observable.create((observer) => observer.next(false));
+    }
+
+    /**
+     * Skip turn
+     * @param game
+     * @param playerUuid
+     */
+    public skip(game: Game, playerUuid: string): Observable<boolean> {
+        if (game.players.find((p) => p.self.uuid === playerUuid)
+            && ((game.turn === 1 && playerUuid === game.black) || (game.turn === -1 && playerUuid === game.white))) {
+            let movement = new Movement([], [], null);
+            game.steps += 1;
+            game.turn = game.steps >= game.handicaps ? -game.turn : game.turn;
+            movement.turn = game.turn;
+            game.history.push(movement);
+            return Observable.create((observer) => observer.next(true));
+        }
+        return Observable.create((observer) => observer.next(false));
     }
 }

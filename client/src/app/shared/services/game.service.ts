@@ -119,6 +119,18 @@ export class GameService {
         this.nsService.socket.emit('new_move', game.uuid, x, y);
     }
 
+    public skip(game: Game, playerUuid: string): void {
+        this.nsService.socket.emit('new_skip', game.uuid, playerUuid, game.steps);
+    }
+
+    public onSkip(): Observable<{ gameUuid: string, playerUuid: string, steps: number }> {
+        return Observable.create((observer) => {
+            this.nsService.socket.on('new_skip', (gameUuid: string, playerUuid: string, steps: number) => {
+                observer.next({gameUuid, playerUuid, steps});
+            });
+        });
+    }
+
     public onNewMove(): Observable<{ x: number, y: number }> {
         return Observable.create((observer) => {
             this.nsService.socket.on('new_move', (game: Game, x, y) => {

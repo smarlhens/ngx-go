@@ -142,6 +142,10 @@ export class App {
                         this.gameController.newMove(nsp, socket, gameUuid, x, y);
                     });
 
+                    socket.on('new_skip', (gameUuid: string, playerUuid: string, steps: number) => {
+                        this.gameController.skipTurn(nsp, socket, gameUuid, playerUuid, steps);
+                    });
+
                 });
             }
 

@@ -82,19 +82,19 @@
 </svg>
 
 <div class="ng6-go-board-panel-actions">
-    <button *ngIf="game.players.length < 2" mdc-fab extended disabled>
+    <button *ngIf="game.players.length < 2" mdc-fab extended disabled i18n-title="@@ng6GoBoardActionsWaitingOpponent" title="Waiting for an opponent">
         <mdc-fab-label i18n="@@ng6GoBoardActionsWaitingOpponent">Waiting for an opponent</mdc-fab-label>
     </button>
 
-    <button *ngIf="game.players.length === 2 && !amIReady()" mdc-fab extended (click)="playerReady()">
+    <button *ngIf="game.players.length === 2 && !amIReady()" mdc-fab extended (click)="playerReady()" i18n-title="@@ng6GoBoardActionsReadyButton" title="Ready">
         <mdc-fab-label i18n="@@ng6GoBoardActionsReadyButton">Ready</mdc-fab-label>
     </button>
 
-    <button *ngIf="game.players.length === 2 && amIReady() && !isOpponentReady()" mdc-fab extended disabled>
+    <button *ngIf="game.players.length === 2 && amIReady() && !isOpponentReady()" mdc-fab extended disabled i18n-title="@@ng6GoBoardActionsOpponentNotReady" title="Your opponent is not ready">
         <mdc-fab-label i18n="@@ng6GoBoardActionsOpponentNotReady">Your opponent is not ready</mdc-fab-label>
     </button>
 
-    <button *ngIf="game.active" mdc-fab extended [disabled]="!((game.turn === -1 && game.white === player.uuid) || (game.turn === 1 && game.black === player.uuid))" (click)="skip()">
+    <button *ngIf="game.active" mdc-fab extended [disabled]="!((game.turn === -1 && game.white === player.uuid) || (game.turn === 1 && game.black === player.uuid))" (click)="skip()" i18n-title="@@ng6GoBoardActionsSkipTurn" title="Skip turn">
         <mdc-fab-label i18n="@@ng6GoBoardActionsSkipTurn">Skip turn</mdc-fab-label>
     </button>
 </div>

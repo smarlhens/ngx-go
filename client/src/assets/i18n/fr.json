@@ -1,11 +1,12 @@
 {
     "ng6-go-board": {
-        "snackbar": {
+        "turn": {
             "me": "C'est votre tour !",
-            "opponent": "C'est le tour de votre adversaire !",
-            "move": {
-                "error": "Vous ne pouvez pas jouer ici !"
-            }
+            "opponent": "C'est le tour de votre adversaire !"
+        },
+        "move": {
+            "error": "Vous ne pouvez pas jouer ici !",
+            "skip": "Votre adversaire passe son tour !"
         }
     }
 }

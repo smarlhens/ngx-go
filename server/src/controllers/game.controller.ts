@@ -11,6 +11,10 @@ export class GameController {
         this.games = [];
     }
 
+    private static isTurnSkipped(game: Game, index: number) {
+        return game.history[index].add.length === 0 && game.history[index].remove.length === 0;
+    }
+
     /**
      * @param nsp
      * @param socket
@@ -188,15 +192,49 @@ export class GameController {
 
             if (GoService.isPlayable(game, x, y, game.turn)) {
                 socket.join('game');
-                this.goService.move(game, x, y);
+                this.goService.move(game, x, y).subscribe(
+                    (success) => {
+                        if (success) {
+                            // get the opponent
+                            const opponent = game.players.find((player) => player.self.socket !== socket.id);
+                            if (typeof opponent !== "undefined") {
+                                // send new move to the opponent
+                                console.log('new_move');
+                                nsp.to(opponent.self.socket).emit('new_move', gameUuid, x, y);
+                            }
+                        }
+                    }
+                );
+            }
+        }
+    }
 
-                // get the opponent
-                const opponent = game.players.find((player) => player.self.socket !== socket.id);
-                if (typeof opponent !== "undefined") {
-                    // send new move to the opponent
-                    console.log('new_move');
-                    nsp.to(opponent.self.socket).emit('new_move', gameUuid, x, y);
-                }
+    public skipTurn(nsp: any, socket: any, gameUuid: string, playerUuid: string, steps: number) {
+        if (this.gameExist(gameUuid)) {
+            const game = this.getByUuid(gameUuid);
+
+            const player = game.players.find((player) => player.self.uuid === playerUuid);
+            if (typeof player !== "undefined") {
+                socket.join('game');
+                this.goService.skip(game, playerUuid).subscribe(
+                    (success) => {
+                        if (success) {
+                            // get the opponent
+                            const opponent = game.players.find((player) => player.self.socket !== socket.id);
+                            if (typeof opponent !== "undefined") {
+                                // send new move to the opponent
+                                console.log('new_skip');
+                                nsp.to(opponent.self.socket).emit('new_skip', gameUuid, playerUuid, steps);
+                            }
+
+                            if (GameController.isTurnSkipped(game, game.history.length - 1)
+                                && GameController.isTurnSkipped(game, game.history.length - 2)) {
+                                // end of game
+                                // get score
+                            }
+                        }
+                    }
+                );
             }
         }
     }
