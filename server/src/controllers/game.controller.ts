@@ -1,6 +1,7 @@
 import {Game} from "../models/game";
 import {PlayerController} from "./player.controller";
 import {GoService} from "../services/go.service";
+import {Player} from "../models/player";
 import uuidGenerator = require('uuid');
 
 export class GameController {
@@ -227,15 +228,32 @@ export class GameController {
                                 nsp.to(opponent.self.socket).emit('new_skip', gameUuid, playerUuid, steps);
                             }
 
-                            if (GameController.isTurnSkipped(game, game.history.length - 1)
+                            // if both players skip their turn
+                            if (game.history.length >= 2 && GameController.isTurnSkipped(game, game.history.length - 1)
                                 && GameController.isTurnSkipped(game, game.history.length - 2)) {
-                                // end of game
-                                // get score
+                                this.endGame(nsp, game, player, opponent);
                             }
                         }
                     }
                 );
             }
+        }
+    }
+
+    /**
+     * @param nsp
+     * @param game
+     * @param player
+     * @param opponent
+     */
+    private endGame(nsp: any, game: Game, player: { self: Player, ready: boolean }, opponent: { self: Player, ready: boolean }) {
+        console.log('end_game');
+        game.finishedAt = new Date();
+        game.active = false;
+        // get score
+        nsp.to(player.self.socket).emit('game_end', game.uuid, game.finishedAt);
+        if (typeof opponent !== "undefined") {
+            nsp.to(opponent.self.socket).emit('game_end', game.uuid, game.finishedAt);
         }
     }
 
@@ -249,10 +267,11 @@ export class GameController {
         console.log('game_start');
         const startingPlayer = game.players[Math.round(Math.random())];
         game.black = startingPlayer.self.uuid;
+        game.startedAt = new Date();
         const opponent = game.players.find((player) => player.self.uuid !== startingPlayer.self.uuid);
         if (typeof opponent !== "undefined") {
             game.white = opponent.self.uuid;
         }
-        nsp.to('game').emit('game_start', startingPlayer.self.uuid);
+        nsp.to('game').emit('game_start', startingPlayer.self.uuid, game.startedAt);
     }
 }

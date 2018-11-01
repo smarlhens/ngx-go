@@ -321,7 +321,7 @@ export class GoService {
      * @param y: y coordinate
      */
     public move(game: Game, x: number, y: number): Observable<boolean> {
-        if (GoService.isPlayable(game, x, y, game.turn)) {
+        if (GoService.isPlayable(game, x, y, game.turn) && game.active) {
             let movement = new Movement([{x: x, y: y, c: game.turn, s: game.steps + 1}], [], null);
             game.sequence[x][y] = game.steps + 1;
             game.grid[x][y] = game.turn;
@@ -354,7 +354,7 @@ export class GoService {
      */
     public skip(game: Game, playerUuid: string): Observable<boolean> {
         if (game.players.find((p) => p.self.uuid === playerUuid)
-            && ((game.turn === 1 && playerUuid === game.black) || (game.turn === -1 && playerUuid === game.white))) {
+            && ((game.turn === 1 && playerUuid === game.black) || (game.turn === -1 && playerUuid === game.white)) && game.active) {
             let movement = new Movement([], [], null);
             game.steps += 1;
             game.turn = game.steps >= game.handicaps ? -game.turn : game.turn;

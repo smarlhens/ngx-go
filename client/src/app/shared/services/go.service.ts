@@ -365,17 +365,28 @@ export class GoService {
     /**
      * Helper to start game
      */
-    public gameStart(game: Game, playerUuid: string): void {
+    public gameStart(game: Game, data: { playerUuid: string, startedAt: Date }): void {
         game.active = true;
         game.turn = 1;
-        let player = game.players.find((p) => p.self.uuid === playerUuid);
+        game.startedAt = data.startedAt;
+        let player = game.players.find((p) => p.self.uuid === data.playerUuid);
         if (player && player.ready) {
             game.black = player.self.uuid;
-            let opponent = game.players.find((player) => player.self.uuid !== playerUuid);
+            let opponent = game.players.find((player) => player.self.uuid !== data.playerUuid);
             if (typeof opponent !== "undefined") {
                 game.white = opponent.self.uuid;
             }
         }
+    }
+
+    /**
+     * Helper to end game
+     * @param game
+     * @param finishedAt
+     */
+    public gameEnd(game: Game, finishedAt: Date): void {
+        game.finishedAt = finishedAt;
+        game.active = false;
     }
 
     /**
@@ -384,7 +395,7 @@ export class GoService {
      * @param y: y coordinate
      */
     public move(game: Game, x: number, y: number): Observable<boolean> {
-        if (GoService.isPlayable(game, x, y, game.turn)) {
+        if (GoService.isPlayable(game, x, y, game.turn) && game.active) {
             let movement = new Movement([{x: x, y: y, c: game.turn, s: game.steps + 1}], [], null);
             game.sequence[x][y] = game.steps + 1;
             game.grid[x][y] = game.turn;
@@ -417,7 +428,7 @@ export class GoService {
      */
     public skip(game: Game, playerUuid: string): Observable<boolean> {
         if (game.players.find((p) => p.self.uuid === playerUuid)
-            && ((game.turn === 1 && playerUuid === game.black) || (game.turn === -1 && playerUuid === game.white))) {
+            && ((game.turn === 1 && playerUuid === game.black) || (game.turn === -1 && playerUuid === game.white)) && game.active) {
             let movement = new Movement([], [], null);
             game.steps += 1;
             game.turn = game.steps >= game.handicaps ? -game.turn : game.turn;

@@ -24,6 +24,7 @@ import {environment} from "../environments/environment";
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {Ng6GoEndGameDialogComponent} from './shared/components/ng6-go-end-game-dialog/ng6-go-end-game-dialog.component';
 
 registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 
@@ -42,7 +43,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         Ng6GoGamesComponent,
         Ng6GoBoardComponent,
         Ng6GoToolbarComponent,
-        Ng6GoOverviewComponent
+        Ng6GoOverviewComponent,
+        Ng6GoEndGameDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -62,6 +64,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
                 deps: [HttpClient]
             }
         })
+    ],
+    entryComponents: [
+        Ng6GoEndGameDialogComponent
     ],
     bootstrap: [AppComponent],
     providers: [{provide: LOCALE_ID, useValue: environment.locale}]

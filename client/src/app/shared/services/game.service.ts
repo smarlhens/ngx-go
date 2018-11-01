@@ -102,10 +102,18 @@ export class GameService {
         });
     }
 
-    public onGameStart(): Observable<string> {
+    public onGameStart(): Observable<{ playerUuid: string, startedAt: Date }> {
         return Observable.create((observer) => {
-            this.nsService.socket.on('game_start', (playerUuid: string) => {
-                observer.next(playerUuid);
+            this.nsService.socket.on('game_start', (playerUuid: string, startedAt: Date) => {
+                observer.next({playerUuid, startedAt});
+            });
+        });
+    }
+
+    public onGameEnd(): Observable<{ gameUuid: string, finishedAt: Date }> {
+        return Observable.create((observer) => {
+            this.nsService.socket.on('game_end', (gameUuid: string, finishedAt: Date) => {
+                observer.next({gameUuid, finishedAt});
             });
         });
     }

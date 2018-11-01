@@ -28,7 +28,7 @@ export class Ng6GoGamesComponent implements OnInit {
                 take(1),
                 tap(() => this.loading = false),
                 flatMap((games: Game[]) => games),
-                filter((game: Game) => typeof game.uuid !== "undefined" && null !== game.uuid && game.uuid.length > 0),
+                filter((game: Game) => typeof game.uuid !== "undefined" && null !== game.uuid && game.uuid.length > 0 && (game.finishedAt === null || game.finishedAt === undefined)),
                 distinctUntilChanged((a: Game, b: Game) => a.uuid === b.uuid)
             )
             .subscribe((game: Game) => {

@@ -4,8 +4,14 @@
         <div class="ng6-go-panel-overview-subtitle" i18n="@@ng6GoOverviewSubtitleGameActive">Game in progress</div>
     </ng-template>
     <ng-template #gameInactive>
-        <div class="ng6-go-panel-overview-title">-</div>
-        <div class="ng6-go-panel-overview-subtitle" i18n="@@ng6GoOverviewSubtitleGameInactive">Pending game</div>
+        <ng-template [ngIf]="!game.active && (game.finishedAt === undefined || game.finishedAt === null)" [ngIfElse]="gameFinished">
+            <div class="ng6-go-panel-overview-title">-</div>
+            <div class="ng6-go-panel-overview-subtitle" i18n="@@ng6GoOverviewSubtitleGameInactive">Pending game</div>
+        </ng-template>
+        <ng-template #gameFinished>
+            <div class="ng6-go-panel-overview-title">-</div>
+            <div class="ng6-go-panel-overview-subtitle" i18n="@@ng6GoOverviewSubtitleGameFinished">Game finished</div>
+        </ng-template>
     </ng-template>
     <div class="ng6-go-panel-overview-content">
         <div class="mat-list-players-title" i18n="@@ng6GoOverviewListTitle">Players :</div>

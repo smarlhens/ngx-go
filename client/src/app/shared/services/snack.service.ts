@@ -16,6 +16,11 @@ export class SnackService {
         this.snackBar.open(message, action, config);
     }
 
+    public warning(message: string, action: string = 'OK', config: MatSnackBarConfig = this.config) {
+        config = Object.assign({}, config, {panelClass: ['warning']});
+        this.snackBar.open(message, action, config);
+    }
+
     public success(message: string, action: string = 'OK', config: MatSnackBarConfig = this.config) {
         config = Object.assign({}, config, {panelClass: ['success']});
         this.snackBar.open(message, action, config);

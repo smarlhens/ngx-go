@@ -7,6 +7,8 @@ import {distinctUntilChanged, filter} from "rxjs/operators";
 import {TranslateService} from "@ngx-translate/core";
 import {Player} from "../../models/player";
 import {SnackService} from "../../services/snack.service";
+import {MatDialog} from "@angular/material";
+import {Ng6GoEndGameDialogComponent} from "../ng6-go-end-game-dialog/ng6-go-end-game-dialog.component";
 
 @Component({
     selector: 'ng6-go-board',
@@ -22,7 +24,8 @@ export class Ng6GoBoardComponent implements OnInit {
         private playerService: PlayerService,
         private gameService: GameService,
         public snackService: SnackService,
-        private translate: TranslateService) {
+        private translate: TranslateService,
+        public dialog: MatDialog) {
     }
 
     ngOnInit(): void {
@@ -49,8 +52,17 @@ export class Ng6GoBoardComponent implements OnInit {
             })
         ;
         this.gameService.onGameStart()
-            .subscribe((playerUuid: string) => {
-                this.goService.gameStart(this.game, playerUuid);
+            .subscribe((data: { playerUuid: string, startedAt: Date }) => {
+                this.goService.gameStart(this.game, data);
+            })
+        ;
+        this.gameService.onGameEnd()
+            .pipe(
+                filter((data) => data.gameUuid === this.game.uuid),
+            )
+            .subscribe((data: { gameUuid: string, finishedAt: Date }) => {
+                this.goService.gameEnd(this.game, data.finishedAt);
+                this.dialog.open(Ng6GoEndGameDialogComponent, {disableClose: true});
             })
         ;
         this.gameService.onNewMove()
@@ -71,7 +83,7 @@ export class Ng6GoBoardComponent implements OnInit {
                 this.goService.skip(this.game, playerUuid).subscribe((success) => {
                     if (success) {
                         this.translate.get('ng6-go-board.move.skip').subscribe((message: string) => {
-                            this.snackService.error(message);
+                            this.snackService.warning(message);
                         });
                     }
                 });
