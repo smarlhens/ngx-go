@@ -7,6 +7,9 @@
 
 This project is an online Go game using NodeJS / Socket.IO on the server side and Angular for the client side.
 
+* Demo (EN) : [click here](https://ng6-go.marlhens.com)
+* Demo (FR) : [click here](https://ng6-go.marlhens.fr)
+
 ## Table of Contents 
 
 - [Functionalities](#functionalities)
@@ -145,8 +148,8 @@ See [CODE_OF_CONDUCT.md](https://github.com/smarlhens/ng6-go/blob/master/CODE_OF
 Name of the contributor authors :
 * [Samuel Marlhens](https://samuel.marlhens.fr)
 
-## License [![GitHub license](https://img.shields.io/github/license/smarlhens/ng6-go.svg)](https://github.com/smarlhens/ng6-go/blob/master/LICENSE)
-
+## License
+ 
 This project is licensed under the [Apache License Version 2.0](https://github.com/smarlhens/ng6-go/blob/master/LICENSE).
 
 ## TODO / IDEAS :
