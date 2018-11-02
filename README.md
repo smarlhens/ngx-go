@@ -10,6 +10,10 @@ This project is an online Go game using NodeJS / Socket.IO on the server side an
 * Demo (EN) : [click here](https://ng6-go.marlhens.com)
 * Demo (FR) : [click here](https://ng6-go.marlhens.fr)
 
+> If you want to test playing against yourself, you should know that the game uses **localStorage**. Two solutions :
+> * Launch the game from two different browsers.
+> * Launch one game in normal mode and the other in private browsing mode.
+
 ## Table of Contents 
 
 - [Functionalities](#functionalities)
