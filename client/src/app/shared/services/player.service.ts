@@ -71,6 +71,18 @@ export class PlayerService {
         });
     }
 
+    public search(name: string): void {
+        this.nsService.socket.emit('search_player', name);
+    }
+
+    public onSearchResult(): Observable<Player[]> {
+        return Observable.create((observer) => {
+            this.nsService.socket.on('search_player', (players: Player[] = []) => {
+                observer.next(players);
+            });
+        });
+    }
+
     private onNewPlayer(): Observable<Player> {
         return Observable.create((observer) => {
             this.nsService.socket.on('new_player', (player: Player) => {

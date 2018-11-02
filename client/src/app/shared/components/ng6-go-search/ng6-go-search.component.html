@@ -1,0 +1,24 @@
+<mat-card class="ng6-go-card-search mb:2@xs mx:3@xs mt:3@xs mb:3@sm mx:4@sm mt:4@sm">
+    <mat-card-title i18n="@@ng6GoSearchCardTitle">Search a player</mat-card-title>
+    <mat-card-content fxLayout="column" fxLayoutAlign="center stretch">
+        <mdc-text-field class="mb:2@xs mb:2@sm" [formControl]="searchControl" i18n-label="@@ng6GoSearchCardField" label="Search" dense=true fullwidth
+                        (keyup)="$event.keyCode == 13 && search()">
+            <mdc-icon trailing clickable (click)="search()">search</mdc-icon>
+        </mdc-text-field>
+    </mat-card-content>
+    <mat-card-actions>
+        <div *ngIf="loading" fxLayoutAlign="center center">
+            <mat-progress-spinner color="primary" [diameter]="70" mode="indeterminate"></mat-progress-spinner>
+        </div>
+        <mat-list *ngIf="!loading && players.length > 0">
+            <mat-list-item class="mat-list-item-game" *ngFor="let player of playersRendered|async">
+                <span fxFlex="50" class="mat-list-item-name">{{player.name}}</span>
+                <span fxFlex="25" class="mat-list-item-details"></span>
+                <span fxFlex="25" class="mat-list-item-actions">
+                    <button (click)="newChallenge(player.uuid)" mdc-button [unelevated]="true"
+                            class="big-round-corner-button" i18n-title="@@ng6GoSearchChallengeButton" title="Challenge" i18n="@@ng6GoSearchChallengeButton">Challenge</button>
+                </span>
+            </mat-list-item>
+        </mat-list>
+    </mat-card-actions>
+</mat-card>

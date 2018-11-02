@@ -8,5 +8,18 @@
             "error": "You can't play here !",
             "skip": "Your opponent skips his turn !"
         }
+    },
+    "ng6-go-new-challenge-dialog": {
+        "refuse": "Your opponent declined your challenge.",
+        "cancel": "The challenge has been cancelled."
+    },
+    "ng6-go-toolbar": {
+        "form": {
+            "username": {
+                "length": "The username must contain at least 3 characters.",
+                "error": "The chosen username is not available.",
+                "success": "The username has been successfully updated."
+            }
+        }
     }
 }

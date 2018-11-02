@@ -17,23 +17,39 @@ export class PlayerController {
      * @param socket
      */
     public new(nsp: any, socket: any): void {
+        console.log('new');
         const player = new Player(PlayerController.getRandomUsername(), socket.id);
         this.players.push(player);
         nsp.to(socket.id).emit('new_player', player);
     }
 
-    public getByUuid(uuid: string) {
+    /**
+     * @param uuid
+     */
+    public getByUuid(uuid: string): Player | null {
         return this.players.find((player) => player.uuid === uuid);
     }
 
     public check(nsp: any, socket: any, player: Player): void {
+        console.log('check');
         if (this.players.some((p) => p.uuid === player.uuid && p.name === player.name)) {
+            this.getByUuid(player.uuid).socket = socket.id;
             nsp.to(socket.id).emit('check_player', true);
         } else if (!this.players.some((p) => p.uuid === player.uuid || p.name === player.name)) {
+            player.socket = socket.id;
             this.players.push(player);
             nsp.to(socket.id).emit('check_player', true);
         } else {
             nsp.to(socket.id).emit('check_player', false);
+        }
+    }
+
+    public updatePlayerSocket(socketId: string, playerUuid: string) {
+        console.log('updatePlayerSocket');
+        let player = this.getByUuid(playerUuid);
+        if (typeof player !== "undefined" && null !== player) {
+            console.log('updatePlayerSocket: player found');
+            player.socket = socketId;
         }
     }
 
@@ -44,6 +60,7 @@ export class PlayerController {
      * @param name
      */
     public newName(nsp: any, socket: any, playerUuid: string, name: string) {
+        console.log('newName');
         let player = this.getByUuid(playerUuid);
         if (typeof player !== "undefined" && null !== player) {
             if (this.players.find((player: Player) => player.name === name) === undefined) {
@@ -53,6 +70,14 @@ export class PlayerController {
                 nsp.to(socket.id).emit('new_name', player.name);
             }
         }
+    }
+
+    public search(nsp: any, socket: any, name: string): void {
+        let playersFiltered = this.players;
+        if (name.length > 0) {
+            playersFiltered = this.players.filter((player) => player.name.includes(name));
+        }
+        nsp.to(socket.id).emit('search_player', playersFiltered);
     }
 
 }

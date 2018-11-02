@@ -48,7 +48,8 @@ export class NamespaceService {
             }
             this.socket = io.connect(environment.server + ns, {
                 query: {
-                    ns: ns
+                    ns: ns,
+                    playerUuid: window.localStorage.getItem('uuid')
                 },
                 forceNew: true
             });

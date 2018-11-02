@@ -8,5 +8,18 @@
             "error": "Vous ne pouvez pas jouer ici !",
             "skip": "Votre adversaire passe son tour !"
         }
+    },
+    "ng6-go-new-challenge-dialog": {
+        "refuse": "Votre adversaire a refusé votre défi.",
+        "cancel": "Le défi a été annulé."
+    },
+    "ng6-go-toolbar": {
+        "form": {
+            "username": {
+                "length": "Le pseudo doit contenir au moins 3 charactères.",
+                "error": "Le pseudo choisit n'est pas disponible.",
+                "success": "Le pseudo a été mis à jour avec succès."
+            }
+        }
     }
 }

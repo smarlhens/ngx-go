@@ -1,0 +1,96 @@
+ng6-go-search{
+    @extend %display-flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    height: 100%;
+    place-content: center stretch;
+    align-items: stretch;
+
+    .ng6-go-card-search {
+        @extend %display-flex;
+        flex-direction: column;
+        width: 100%;
+
+        .mdc-button.big-round-corner-button {
+            float: right;
+            font-size: 0.75rem;
+            margin-left: 1rem;
+            @include mdc-button-corner-radius(30px);
+        }
+
+        .mat-card-content {
+            margin-bottom: 0;
+        }
+
+        .mat-card-actions{
+            overflow-y: auto;
+            padding: 0 !important;
+            margin: 0 !important;
+
+            .mat-list {
+                width: 100%;
+                overflow-y: auto;
+
+                .mat-list-item-game .mat-list-item-content {
+                    @extend %display-flex;
+                    flex-direction: row;
+                    padding: 0;
+                    width: 100%;
+
+                    .mat-list-item-name, .mat-list-item-details, .mat-list-item-actions {
+                        flex: 1 1 100%;
+                        box-sizing: border-box;
+                    }
+
+                    .mat-list-item-actions, .mat-list-item-details {
+                        max-width: 25%;
+                    }
+
+                    .mat-list-item-name {
+                        max-width: 50%;
+                    }
+
+                    .mat-list-item-details {
+                        color: grey;
+                        font-size: 0.8rem;
+                    }
+
+                    .mat-list-item-actions .mdc-button {
+                        font-size: 0.625rem;
+                        @include mdc-states-base-color(map_get($mat-orange, 900));
+                        @include mdc-button-filled-accessible(map_get($mat-orange, 900));
+                    }
+                }
+            }
+        }
+    }
+
+    .mdc-text-field {
+        width: 100%;
+        border-radius: 30px;
+        border: 0;
+        padding-left: 1rem;
+
+        .mdc-text-field__input {
+            border: 0 !important;
+        }
+
+        .ng-mdc-icon {
+            color: $mdc-theme-primary !important;
+        }
+    }
+
+    .mdc-text-field--fullwidth:not(.mdc-text-field--textarea)::before,
+    .mdc-text-field--fullwidth:not(.mdc-text-field--textarea)::after,
+    .mdc-text-field--fullwidth:not(.mdc-text-field--textarea):not(.mdc-text-field--disabled) {
+        background-color: whitesmoke !important;
+    }
+
+    .mdc-text-field--fullwidth:not(.mdc-text-field--textarea) .mdc-text-field__input {
+        padding: 0 48px 0 0 !important;
+    }
+
+    .mdc-line-ripple {
+        display: none !important;
+    }
+}

@@ -1,0 +1,22 @@
+<h1 mat-dialog-title i18n="@@ng6GoNewChallengeDialogTitle">New challenge</h1>
+<mat-dialog-content>
+    <ng-template [ngIf]="player.name === data.challenger" [ngIfElse]="challengedMessage">
+        <p i18n="@@ng6GoNewChallengeDialogChallengedMessage">The challenge will be automatically cancelled in {{secondsLeft}} seconds without any answer from {{data.challenged}}.</p>
+    </ng-template>
+    <ng-template #challengedMessage>
+        <p i18n="@@ng6GoNewChallengeDialogChallengerMessage">The player {{data.challenger}} challenges you !<br>
+            The challenge will be automatically declined in {{secondsLeft}} seconds without any answer from you.</p>
+    </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <ng-template [ngIf]="player.name === data.challenger" [ngIfElse]="challengedActions">
+        <button mat-button (click)="cancel()" mat-dialog-close i18n-title="@@ng6GoNewChallengeDialogCancelButton"
+                title="Cancel" i18n="@@ng6GoNewChallengeDialogCancelButton">Cancel</button>
+    </ng-template>
+    <ng-template #challengedActions>
+        <button mat-button (click)="refuse()" mat-dialog-close i18n-title="@@ng6GoNewChallengeDialogRefuseButton"
+                title="Refuse" i18n="@@ng6GoNewChallengeDialogRefuseButton">Refuse</button>
+        <button mat-button (click)="accept()" mat-dialog-close i18n-title="@@ng6GoNewChallengeDialogAcceptButton"
+                title="Accept" i18n="@@ng6GoNewChallengeDialogAcceptButton">Accept</button>
+    </ng-template>
+</mat-dialog-actions>

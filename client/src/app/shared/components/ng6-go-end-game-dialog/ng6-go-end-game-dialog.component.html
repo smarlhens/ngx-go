@@ -3,5 +3,7 @@
     <p i18n="@@ng6GoEndGameDialogMessage">You will be redirected to the home page in {{secondsLeft}} seconds.</p>
 </mat-dialog-content>
 <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
-    <button mat-button routerLink="/" mat-dialog-close i18n-title="@@ng6GoEndGameDialogButton" title="Go to the homepage" i18n="@@ng6GoEndGameDialogButton">Go to the homepage</button>
+    <button mat-button (click)="home()" mat-dialog-close i18n-title="@@ng6GoEndGameDialogButton"
+            title="Go to the homepage" i18n="@@ng6GoEndGameDialogButton">Go to the homepage
+    </button>
 </mat-dialog-actions>

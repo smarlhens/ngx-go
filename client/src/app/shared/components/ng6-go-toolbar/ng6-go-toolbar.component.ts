@@ -9,6 +9,7 @@ import {environment} from "../../../../environments/environment";
 import {Router} from "@angular/router";
 import {Player} from "../../models/player";
 import {SnackService} from "../../services/snack.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'ng6-go-toolbar',
@@ -26,10 +27,11 @@ export class Ng6GoToolbarComponent implements OnInit {
         private location: Location,
         public router: Router,
         public snackService: SnackService,
+        private translate: TranslateService,
         private goService: GoService
     ) {
         this.usernameControl = new FormControl('', [
-            Validators.minLength(4),
+            Validators.minLength(3),
             Validators.pattern(/\S+/),
             Validators.pattern(/^[a-zA-Z\u00C0-\u017F\ ]+$/)
         ]);
@@ -43,13 +45,15 @@ export class Ng6GoToolbarComponent implements OnInit {
         });
         this.usernameControl.valueChanges
             .pipe(
-                debounceTime(250),
+                debounceTime(500),
                 filter((name: string) => name !== this.player.name),
                 filter((name: string) => {
-                    if (name.length < 4) {
-                        this.snackService.error('Le pseudo doit contenir au moins 4 charactères.');
+                    if (name.length < 3) {
+                        this.translate.get('ng6-go-toolbar.form.username.length').subscribe((message: string) => {
+                            this.snackService.error(message);
+                        });
                     }
-                    return name.length >= 4;
+                    return name.length >= 3;
                 }),
                 distinctUntilChanged()
             )
@@ -58,10 +62,14 @@ export class Ng6GoToolbarComponent implements OnInit {
         this.playerService.onNewName().subscribe(
             (name: string) => {
                 if (name === this.player.name) {
-                    this.snackService.error('Le pseudo choisit n\'est pas disponible.');
+                    this.translate.get('ng6-go-toolbar.form.username.error').subscribe((message: string) => {
+                        this.snackService.error(message);
+                    });
                     this.usernameControl.setValue(this.player.name);
                 } else {
-                    this.snackService.success('Le pseudo a été mis à jour avec succès.');
+                    this.translate.get('ng6-go-toolbar.form.username.success').subscribe((message: string) => {
+                        this.snackService.success(message);
+                    });
                     this.playerService.updateName(name);
                     this.usernameControl.setValue(name);
                 }

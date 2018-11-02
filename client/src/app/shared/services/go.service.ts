@@ -374,6 +374,7 @@ export class GoService {
             game.black = player.self.uuid;
             let opponent = game.players.find((player) => player.self.uuid !== data.playerUuid);
             if (typeof opponent !== "undefined") {
+                opponent.ready = true;
                 game.white = opponent.self.uuid;
             }
         }

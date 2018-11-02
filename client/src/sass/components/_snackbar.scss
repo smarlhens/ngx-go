@@ -8,17 +8,14 @@
 }
 
 .mat-snack-bar-container {
+    border-radius: 25px !important;
+
     &.mat-snack-bar-center{
         margin-bottom: 1rem !important;
     }
 
-    .mat-button{
+    &.error, &.success, &.warning, .mat-button{
         color: white;
-    }
-
-    &.error, &.success, &.warning{
-        color: white;
-        border-radius: 25px;
     }
 
     &.error {

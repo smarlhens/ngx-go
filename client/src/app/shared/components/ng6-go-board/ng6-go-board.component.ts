@@ -9,6 +9,7 @@ import {Player} from "../../models/player";
 import {SnackService} from "../../services/snack.service";
 import {MatDialog} from "@angular/material";
 import {Ng6GoEndGameDialogComponent} from "../ng6-go-end-game-dialog/ng6-go-end-game-dialog.component";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'ng6-go-board',
@@ -25,7 +26,8 @@ export class Ng6GoBoardComponent implements OnInit {
         private gameService: GameService,
         public snackService: SnackService,
         private translate: TranslateService,
-        public dialog: MatDialog) {
+        public dialog: MatDialog,
+        public router: Router) {
     }
 
     ngOnInit(): void {
@@ -62,7 +64,12 @@ export class Ng6GoBoardComponent implements OnInit {
             )
             .subscribe((data: { gameUuid: string, finishedAt: Date }) => {
                 this.goService.gameEnd(this.game, data.finishedAt);
-                this.dialog.open(Ng6GoEndGameDialogComponent, {disableClose: true});
+                const dialogRef = this.dialog.open(Ng6GoEndGameDialogComponent, {disableClose: true});
+                dialogRef.afterClosed().subscribe(() => {
+                    if (this.router.url !== '/') {
+                        this.router.navigate(['/']);
+                    }
+                });
             })
         ;
         this.gameService.onNewMove()

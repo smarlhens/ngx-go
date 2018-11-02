@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 export class Ng6GoEndGameDialogComponent implements OnInit {
 
     public secondsLeft: number = 10;
+    private intervalId: any;
 
     constructor(
         public dialogRef: MatDialogRef<Ng6GoEndGameDialogComponent>,
@@ -17,14 +18,22 @@ export class Ng6GoEndGameDialogComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        setInterval(() => {
-            if (this.secondsLeft >= 1) {
-                --this.secondsLeft;
-            } else {
-                this.dialogRef.close();
-                this.router.navigate(['/']);
-            }
-        }, 1000)
+        this.secondsLeft = 10;
+        this.dialogRef.afterOpen().subscribe(() => {
+            this.intervalId = setInterval(() => {
+                if (this.secondsLeft >= 1) {
+                    --this.secondsLeft;
+                } else {
+                    this.home();
+                }
+            }, 1000);
+        });
+    }
+
+    public home(): void {
+        clearInterval(this.intervalId);
+        this.dialogRef.close();
+        this.router.navigate(['/']);
     }
 
 }

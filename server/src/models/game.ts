@@ -14,7 +14,7 @@ export class Game {
     history: Movement[] = [];
     lines;
     stars;
-    players: {self: Player, ready: boolean}[] = [];
+    players: { self: Player, ready: boolean }[] = [];
     // 1: black; -1: white; 0: empty
     turn: number = 0;
     // freeze the board if inactive
@@ -23,6 +23,7 @@ export class Game {
     createdAt: Date;
     startedAt: Date;
     finishedAt: Date;
+    private: boolean = false;
 
     constructor(uuid: string) {
         this.createdAt = new Date();

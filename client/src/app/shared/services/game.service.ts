@@ -162,4 +162,54 @@ export class GameService {
             });
         });
     }
+
+    // todo : create challenge service
+    public onNewChallenge(): Observable<{ gameUuid: string, challenger: string, challenged: string }> {
+        return Observable.create((observer) => {
+            this.nsService.socket.on('challenge_new', (gameUuid: string, challenger: string, challenged: string) => {
+                observer.next({gameUuid, challenger, challenged});
+            });
+        });
+    }
+
+    public newChallenge(challengerUuid: string, challengedUuid: string): void {
+        this.nsService.socket.emit('challenge_new', challengerUuid, challengedUuid);
+    }
+
+    public acceptChallenge(gameUuid: string): void {
+        this.nsService.socket.emit('challenge_accept', gameUuid);
+    }
+
+    public cancelChallenge(gameUuid: string): void {
+        this.nsService.socket.emit('challenge_cancel', gameUuid);
+    }
+
+    public refuseChallenge(gameUuid: string): void {
+        this.nsService.socket.emit('challenge_refuse', gameUuid);
+    }
+
+    public onAcceptChallenge(): Observable<string> {
+        return Observable.create((observer) => {
+            this.nsService.socket.on('challenge_accept', (gameUuid: string) => {
+                console.log('challenge_accept');
+                observer.next(gameUuid);
+            });
+        });
+    }
+
+    public onCancelChallenge(): Observable<string> {
+        return Observable.create((observer) => {
+            this.nsService.socket.on('challenge_cancel', (gameUuid: string) => {
+                observer.next(gameUuid);
+            });
+        });
+    }
+
+    public onRefuseChallenge(): Observable<string> {
+        return Observable.create((observer) => {
+            this.nsService.socket.on('challenge_refuse', (gameUuid: string) => {
+                observer.next(gameUuid);
+            });
+        });
+    }
 }

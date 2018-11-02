@@ -41,8 +41,11 @@
                 <source>Join</source>
                 <target>Join</target>
                 <context-group purpose="location">
-                    <context context-type="sourcefile">app/shared/components/ng6-go-games/ng6-go-games.component.html
-                    </context>
+                    <context context-type="sourcefile">app/shared/components/ng6-go-games/ng6-go-games.component.html</context>
+                    <context context-type="linenumber">19</context>
+                </context-group>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-games/ng6-go-games.component.html</context>
                     <context context-type="linenumber">19</context>
                 </context-group>
             </trans-unit>
@@ -67,11 +70,11 @@
                 <target>Go to the homepage</target>
                 <context-group purpose="location">
                     <context context-type="sourcefile">app/shared/components/ng6-go-end-game-dialog/ng6-go-end-game-dialog.component.html</context>
-                    <context context-type="linenumber">6</context>
+                    <context context-type="linenumber">7</context>
                 </context-group>
                 <context-group purpose="location">
                     <context context-type="sourcefile">app/shared/components/ng6-go-end-game-dialog/ng6-go-end-game-dialog.component.html</context>
-                    <context context-type="linenumber">6</context>
+                    <context context-type="linenumber">7</context>
                 </context-group>
             </trans-unit>
             <trans-unit id="ng6GoBoardActionsWaitingOpponent" datatype="html">
@@ -212,6 +215,96 @@
                         app/shared/components/ng6-go-overview/ng6-go-overview.component.html
                     </context>
                     <context context-type="linenumber">30</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoNewChallengeDialogTitle" datatype="html">
+                <source>New challenge</source>
+                <target>New challenge</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-new-challenge-dialog/ng6-go-new-challenge-dialog.component.html</context>
+                    <context context-type="linenumber">1</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoNewChallengeDialogChallengedMessage" datatype="html">
+                <source>The challenge will be automatically cancelled in <x id="INTERPOLATION" equiv-text="{{secondsLeft}}"/> seconds without any answer from <x id="INTERPOLATION_1" equiv-text="{{data.challenged}}"/>.</source>
+                <target>The challenge will be automatically cancelled in <x id="INTERPOLATION" equiv-text="{{secondsLeft}}"/> seconds without any answer from <x id="INTERPOLATION_1" equiv-text="{{data.challenged}}"/>.</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-new-challenge-dialog/ng6-go-new-challenge-dialog.component.html</context>
+                    <context context-type="linenumber">4</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoNewChallengeDialogChallengerMessage" datatype="html">
+                <source>The player <x id="INTERPOLATION" equiv-text="{{data.challenger}}"/> challenges you !<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
+                    The challenge will be automatically declined in <x id="INTERPOLATION_1" equiv-text="{{secondsLeft}}"/> seconds without any answer from you.</source>
+                <target>The player <x id="INTERPOLATION" equiv-text="{{data.challenger}}"/> challenges you !<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
+                    The challenge will be automatically declined in <x id="INTERPOLATION_1" equiv-text="{{secondsLeft}}"/> seconds without any answer from you.</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-new-challenge-dialog/ng6-go-new-challenge-dialog.component.html</context>
+                    <context context-type="linenumber">7</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoNewChallengeDialogCancelButton" datatype="html">
+                <source>Cancel</source>
+                <target>Cancel</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-new-challenge-dialog/ng6-go-new-challenge-dialog.component.html</context>
+                    <context context-type="linenumber">14</context>
+                </context-group>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-new-challenge-dialog/ng6-go-new-challenge-dialog.component.html</context>
+                    <context context-type="linenumber">14</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoNewChallengeDialogRefuseButton" datatype="html">
+                <source>Refuse</source>
+                <target>Refuse</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-new-challenge-dialog/ng6-go-new-challenge-dialog.component.html</context>
+                    <context context-type="linenumber">18</context>
+                </context-group>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-new-challenge-dialog/ng6-go-new-challenge-dialog.component.html</context>
+                    <context context-type="linenumber">18</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoNewChallengeDialogAcceptButton" datatype="html">
+                <source>Accept</source>
+                <target>Accept</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-new-challenge-dialog/ng6-go-new-challenge-dialog.component.html</context>
+                    <context context-type="linenumber">20</context>
+                </context-group>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-new-challenge-dialog/ng6-go-new-challenge-dialog.component.html</context>
+                    <context context-type="linenumber">20</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoSearchCardTitle" datatype="html">
+                <source>Search a player</source>
+                <target>Search a player</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-search/ng6-go-search.component.html</context>
+                    <context context-type="linenumber">2</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoSearchCardField" datatype="html">
+                <source>Search</source>
+                <target>Search</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-search/ng6-go-search.component.html</context>
+                    <context context-type="linenumber">4</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="ng6GoSearchChallengeButton" datatype="html">
+                <source>Challenge</source>
+                <target>Challenge</target>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-search/ng6-go-search.component.html</context>
+                    <context context-type="linenumber">19</context>
+                </context-group>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/shared/components/ng6-go-search/ng6-go-search.component.html</context>
+                    <context context-type="linenumber">19</context>
                 </context-group>
             </trans-unit>
         </body>

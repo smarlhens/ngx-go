@@ -1,4 +1,4 @@
-<mat-card class="ng6-go-card-games m:3@xs m:4@sm">
+<mat-card class="ng6-go-card-games mt:2@xs mx:3@xs mb:3@xs mt:3@sm mx:4@sm mb:4@sm">
     <mat-card-title>
         <span i18n="@@ng6GoGamesTitle">Pending games</span>
         <span>
@@ -16,7 +16,7 @@
                 <span fxFlex="25" class="mat-list-item-details"></span>
                 <!--<span fxFlex="25" class="mat-list-item-details">dimension : {{game.dimension}}</span>-->
                 <span fxFlex="25" class="mat-list-item-actions">
-                    <button (click)="joinGame(game.uuid)" mdc-button [unelevated]="true" class="big-round-corner-button" i18n="@@ng6GoGamesJoinButton">Join</button>
+                    <button (click)="joinGame(game.uuid)" mdc-button [unelevated]="true" class="big-round-corner-button" i18n-title="@@ng6GoGamesJoinButton" title="Join" i18n="@@ng6GoGamesJoinButton">Join</button>
                 </span>
             </mat-list-item>
         </mat-list>
