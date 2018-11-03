@@ -49,6 +49,7 @@ export class Ng6GoToolbarComponent implements OnInit {
                 filter((name: string) => name !== this.player.name),
                 filter((name: string) => {
                     if (name.length < 3) {
+                        this.usernameControl.setValue(this.player.name);
                         this.translate.get('ng6-go-toolbar.form.username.length').subscribe((message: string) => {
                             this.snackService.error(message);
                         });
