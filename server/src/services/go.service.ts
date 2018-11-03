@@ -19,7 +19,7 @@ export class GoService {
             return false;
         }
         if (game.history !== undefined && game.history.length > 1
-            && game.history[game.history.length - 1].remove.find((move: any) => move.x === x && move.y === y && move.c === c)) {
+            && game.history[game.history.length - 1].remove.some((move: any) => move.x === x && move.y === y && move.c === c) && GoService.countLiberties(game, x, y) === 0) {
             return false;
         }
         game.grid[x][y] = c;
