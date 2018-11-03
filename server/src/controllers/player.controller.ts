@@ -80,4 +80,12 @@ export class PlayerController {
         nsp.to(socket.id).emit('search_player', playersFiltered);
     }
 
+    public kickAFKPlayers(onlinePlayers: Player[] = []): void {
+        this.players.forEach((player: Player, playerIndex: number) => {
+            if (onlinePlayers.every((p: Player) => p.uuid !== player.uuid)) {
+                this.players.splice(playerIndex, 1);
+            }
+        });
+    }
+
 }

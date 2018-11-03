@@ -58,6 +58,11 @@ export class App {
         setInterval(() => {
             this.gameController.deleteOldGames(this.io);
         }, 600000);
+        // each 5 minutes, kick AFK players
+        setInterval(() => {
+            this.gameController.kickAFKPlayers(this.io);
+            // todo : send an event to display a dialog
+        }, 30000);
         this.listen();
     }
 

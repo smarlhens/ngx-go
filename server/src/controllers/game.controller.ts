@@ -69,6 +69,22 @@ export class GameController {
         }
     }
 
+    /***
+     * @param io
+     */
+    public kickAFKPlayers(io: any): void {
+        console.log('GameController:kickAFKPlayers');
+        let onlinePlayers: Player[] = [];
+        if (typeof this.games !== "undefined" && null !== this.games) {
+            this.games.forEach((game: Game) => {
+                game.players.forEach((player: { self: Player, ready: boolean }) => {
+                    onlinePlayers.push(player.self);
+                });
+            });
+        }
+        this.playerController.kickAFKPlayers(onlinePlayers);
+    }
+
     /**
      * @param gameUuid
      */
@@ -108,7 +124,7 @@ export class GameController {
                 // get the opponent if exist
                 const opponent = game.players.find((player) => player.self.uuid !== playerUuid);
                 if (typeof opponent !== "undefined") {
-                    nsp.to(player.socket).emit('join_game', opponent.self);
+                    nsp.to(socket.id).emit('join_game', opponent.self);
                     nsp.to(opponent.self.socket).emit('join_game', player);
                     console.log('GameController:game_ready');
                     io.to('game').emit('game_ready', gameUuid);
