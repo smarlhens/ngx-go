@@ -15,7 +15,7 @@ ng6-go-search{
             float: right;
             font-size: 0.75rem;
             margin-left: 1rem;
-            @include mdc-button-corner-radius(30px);
+            border-radius: 30px;
         }
 
         .mat-card-content {
